@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 
 function getApiUrl() {
   const baseUrl = Constants.expoConfig?.extra?.API_URL;
-  if (!baseUrl) return '';
+  if (!baseUrl) return 'http://18.222.105.195:8080/';
 
   return baseUrl;
 }

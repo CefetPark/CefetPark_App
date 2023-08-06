@@ -7,7 +7,7 @@ import Login from '@screens/login-screen';
 import Profile from '@screens/profile-screen';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { HomeStackParamList, RootStackParamList, StackParamList } from 'types';
+import { HomeStackParamList, RootStackParamList, StackParamList, LoginTypes } from '../../../types';
 import { TabBarIcon } from './tabbar-icon';
 import { ParkingDetails } from '@screens/parking-details-screen';
 import ParkingManage from '@screens/parking-manage-screen';
@@ -57,11 +57,11 @@ const AuthNavigator = observer(() => {
   );
 });
 
-const HomeNavigator = () => {
-  const token = null;
+const HomeNavigator = observer(() => {
+  const { authStore } = useStore();
   return (
     <HomeStack.Navigator>
-      {token ? (
+      {authStore.user?.userType == LoginTypes.Driver ? (
         <>
           <HomeStack.Screen
             name="Home"
@@ -82,7 +82,7 @@ const HomeNavigator = () => {
             options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
           />
           <HomeStack.Screen
-            name="ParkingManage"
+            name="ParkingDetails"
             component={ParkingManage}
             options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
           />
@@ -95,7 +95,7 @@ const HomeNavigator = () => {
       )}
     </HomeStack.Navigator>
   );
-};
+});
 
 const BottomNavigator = () => {
   return (

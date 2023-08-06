@@ -1,47 +1,35 @@
 import { makeAutoObservable } from 'mobx';
 import { LoginFormData } from './login.form';
 import { AuthService } from './auth.service';
-
-interface User {
-  id: string;
-  name: string;
-  cpf: string;
-  enrollment?: string;
-  phoneNumber: string;
-  email: string;
-  role: 'Driver' | 'Security';
-}
+import { UserModel } from './auth.model';
 
 class AuthStore {
   private authService = new AuthService();
   authToken = '';
-  currentUser: User;
+  user: UserModel | null = null;
 
   constructor() {
     makeAutoObservable(this);
-    this.currentUser = {
-      id: '123',
-      name: 'Matheus Cardoso',
-      cpf: '12345678900',
-      email: 'email@email.com',
-      phoneNumber: '40028922',
-      role: 'Driver',
-      enrollment: '123321',
-    };
   }
 
-  setToken() {
-    this.authToken = 'driver';
+  setToken(authToken: string) {
+    this.authToken = authToken;
   }
 
-  setUser(user: User) {
-    this.currentUser = user;
+  setUser(user: UserModel) {
+    this.user = user;
+  }
+
+  getToken(){
+    return this.authToken
   }
 
   async login(loginFormData: LoginFormData) {
-    console.log(loginFormData);
     const req = await this.authService.login(loginFormData);
-    console.log(req);
+    if(req.data) {
+      this.setUser(req.data.user)
+      this.setToken(req.data.token)
+    }
   }
 }
 

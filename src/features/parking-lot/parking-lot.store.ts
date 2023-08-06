@@ -1,13 +1,7 @@
-import { makeAutoObservable, observable, action } from 'mobx';
-
-export interface ParkingLot {
-  id: string;
-  name: string;
-  availableSpots: string;
-  totalParkingSpots: string;
-  address: string;
-}
-
+import { authStore } from '@features/auth/auth.store';
+import { makeAutoObservable, observable, action, reaction } from 'mobx';
+import { ParkingLotModel } from './parking-lot.model';
+import { ParkingLotService } from './parking-lot.service';
 interface QrCodeData {
   plate: string;
   name: string;
@@ -15,7 +9,8 @@ interface QrCodeData {
 }
 
 class ParkingLotStore {
-  private parkingLots: ParkingLot[];
+  parkingLots: ParkingLotModel[] = [];
+  private parkingLotService = new ParkingLotService()
   qrCodeData: QrCodeData | null = null;
 
   constructor() {
@@ -23,43 +18,23 @@ class ParkingLotStore {
       qrCodeData: observable,
       setParkingLots: action,
       setQrCodeData: action,
-      getParkingLots: action,
     });
-    this.parkingLots = [
-      {
-        id: '123',
-        address: 'Teste de Oliveira',
-        availableSpots: '10',
-        name: 'Teste',
-        totalParkingSpots: '20',
-      },
-      {
-        id: '1234',
-        address: 'Teste de Oliveira',
-        availableSpots: '10',
-        name: 'Teste2',
-        totalParkingSpots: '20',
-      },
-      {
-        id: '12345',
-        address: 'Teste de Oliveira',
-        availableSpots: '10',
-        name: 'Teste3',
-        totalParkingSpots: '20',
-      },
-    ];
+
+    reaction(
+      () => authStore.authToken,
+      async () => {
+        const parkingLots = await this.parkingLotService.getParkingLots()
+        this.parkingLots = parkingLots.data
+        console.log(this.parkingLots)
+      })
   }
 
   setQrCodeData(qrCodeData: QrCodeData | null) {
     this.qrCodeData = qrCodeData;
   }
 
-  setParkingLots(parkingLots: ParkingLot[]) {
+  setParkingLots(parkingLots: ParkingLotModel[]) {
     this.parkingLots = parkingLots;
-  }
-
-  getParkingLots() {
-    return this.parkingLots;
   }
 }
 
