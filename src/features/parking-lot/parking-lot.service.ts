@@ -5,10 +5,10 @@ import { authStore } from "@features/auth/auth.store";
 
 export class ParkingLotService {
     private httpService = new Service('Estacionamento')
-    
+
     constructor() { }
 
     async getParkingLots() {
-        return await this.httpService.get('', ParkingLotModel)
+        return await this.httpService.getList('', ParkingLotModel, authStore.getToken())
     }
 }

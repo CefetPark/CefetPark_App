@@ -1,8 +1,17 @@
+import useStore from '@features/app/use-store';
 import { Box, HStack, Progress, Text, VStack } from 'native-base';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ParkingInfoList = () => {
+  const { parkingLotStore } = useStore();
+  const occupiedSpots =
+    parkingLotStore.currentParkingLot.totalParkingSpots -
+    parkingLotStore.currentParkingLot.freeSpots;
+  const occupiedPercentage =
+    (occupiedSpots / parkingLotStore.currentParkingLot.totalParkingSpots) * 100;
+  const progressColor =
+    occupiedPercentage < 40 ? 'success' : occupiedPercentage < 80 ? 'warning' : 'danger';
   return (
     <VStack space={4} alignItems="center">
       <HStack justifyContent={'space-between'} w={'100%'}>
@@ -21,7 +30,7 @@ const ParkingInfoList = () => {
               Vagas disponíveis:
             </Text>
             <Text fontWeight={700} fontSize={40}>
-              20
+              {parkingLotStore.currentParkingLot.freeSpots}
             </Text>
           </VStack>
         </Box>
@@ -40,7 +49,7 @@ const ParkingInfoList = () => {
               Vagas ocupadas:
             </Text>
             <Text fontWeight={700} fontSize={40}>
-              3
+              {occupiedSpots}
             </Text>
           </VStack>
         </Box>
@@ -58,7 +67,7 @@ const ParkingInfoList = () => {
           <Text fontSize={20} fontWeight={500}>
             Lotação
           </Text>
-          <Progress value={15} _filledTrack={{ bg: 'green.400' }} w={'100%'} />
+          <Progress value={occupiedPercentage} _filledTrack={{ bg: progressColor }} w={'100%'} />
         </VStack>
       </Box>
     </VStack>

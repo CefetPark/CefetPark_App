@@ -11,6 +11,6 @@ export class AuthService {
     error: { statusError: number; errorMessage: string } | null;
     data: any;
   }> {
-    return await this.httpService.post<AuthModel>('login', AuthModel, { ...data });
+    return await this.httpService.post<AuthModel>('login', AuthModel, { ...data }, '');
   }
 }

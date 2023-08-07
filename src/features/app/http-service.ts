@@ -1,4 +1,3 @@
-import { authStore } from '@features/auth/auth.store';
 import axios, { Axios, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ClazzOrModelSchema, deserialize } from 'serializr';
 
@@ -9,7 +8,6 @@ export class Service {
   private error: { statusError: number; errorMessage: string } | null = null;
   private data: any = null;
   private baseUrl: string = Env.baseUrl;
-  private authToken: string | undefined
   private axios: Axios
 
   constructor(module: string) {
@@ -21,7 +19,7 @@ export class Service {
     url: string,
     modelSchema?: ClazzOrModelSchema<T>,
     data?: any,
-    options?: AxiosRequestConfig
+    authToken?: string
   ): Promise<{
     isLoading: boolean;
     error: { statusError: number; errorMessage: string } | null;
@@ -30,7 +28,8 @@ export class Service {
     try {
       this.isLoading = true;
       const urlFormated = url ? `${this.baseUrl}/${url}` : this.baseUrl
-      const response: AxiosResponse = await this.axios.post(urlFormated, data, { headers: { Authorization: `Bearer ${authStore.authToken}` } });
+      const headers: AxiosRequestConfig = authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}
+      const response: AxiosResponse = await this.axios.post(urlFormated, data, headers);
       if (modelSchema) this.data = deserialize<T>(modelSchema, response.data.data);
       else this.data = response.data;
 
@@ -57,7 +56,8 @@ export class Service {
   }
 
   async get<T>(url: string,
-    modelSchema?: ClazzOrModelSchema<T>
+    modelSchema?: ClazzOrModelSchema<T>,
+    authToken?: string
   ): Promise<{
     isLoading: boolean;
     error: { statusError: number; errorMessage: string } | null;
@@ -65,8 +65,8 @@ export class Service {
   }> {
     this.isLoading = true;
     const urlFormated = url ? `${this.baseUrl}/${url}` : this.baseUrl
-    console.log(urlFormated)
-    const response: AxiosResponse = await this.axios.get(urlFormated, { headers: { Authorization: `Bearer ${authStore.authToken}` } });
+    const headers: AxiosRequestConfig = authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}
+    const response: AxiosResponse = await this.axios.get(urlFormated, headers);
     if (modelSchema) this.data = deserialize<T>(modelSchema, response.data.data);
     else this.data = response.data;
 
@@ -89,5 +89,17 @@ export class Service {
       error: { statusError: -1, errorMessage: 'Erro ao tentar obter dados' },
       data: null,
     };
+  }
+
+  getList<T>(url: string,
+    modelSchema?: ClazzOrModelSchema<T>,
+    authToken?: string
+  ): Promise<{
+    isLoading: boolean;
+    error: { statusError: number; errorMessage: string } | null;
+    data: any;
+  }> {
+    const schema = modelSchema as any
+    return this.get<T[]>(url, schema ? schema : undefined, authToken)
   }
 }

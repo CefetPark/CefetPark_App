@@ -26,7 +26,17 @@ export class ParkingLotModel {
     freeSpots = 0
 
     @serializable(object(AddressModel))
-    address = {}
+    address = {
+        id: 0,
+        name: "",
+        number: "",
+        complement: null,
+        neighborhood: "",
+        zipCode: "",
+        longitude: "",
+        latitude: "",
+        addressType: "",
+    }
 }
 
 createModelSchema(AddressModel, {
@@ -46,5 +56,5 @@ createModelSchema(ParkingLotModel, {
     name: alias('nome', primitive()),
     totalParkingSpots: alias('qtdVagasTotal', primitive()),
     freeSpots: alias('qtdVagasLivres', primitive()),
-    address: object(ParkingLotModel)
+    address: alias('endereco', object(AddressModel))
 })
