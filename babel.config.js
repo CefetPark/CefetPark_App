@@ -12,7 +12,7 @@ module.exports = function (api) {
             '@assets': './assets',
             '@navigation': './src/features/navigation/index.tsx',
             '@screens': './src/screens',
-            '@features': './src/features'
+            '@features': './src/features',
           },
           extensions: ['.ts', '.tsx'],
         },

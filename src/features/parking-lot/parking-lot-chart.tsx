@@ -1,4 +1,4 @@
-import { Box, Center, Divider, HStack, IconButton, Text, VStack } from 'native-base';
+import { Box, Center, Divider, HStack, Text, View, VStack } from 'native-base';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -61,45 +61,23 @@ export const Chart = () => {
         </Box>
         <Box>
           <HStack h={20} justifyContent={'center'} alignItems={'flex-end'} space={4}>
-            <Box alignSelf={'center'}>
-              <IconButton
-                onPress={() => removeData()}
-                icon={<Icon name="chevron-left" />}
-                borderRadius="full"
-                _icon={{
-                  color: 'orange.500',
-                  size: 'md',
-                }}
-                _hover={{
-                  bg: 'orange.600:alpha.20',
-                }}
-              />
+            <Box alignSelf={'center'} w={5} h={5}>
+              <Icon size={20} onPress={() => removeData()} name="chevron-left" />
             </Box>
             {currentData.map((info, index) => {
               return (
                 <Center key={index} rounded={4} w={7} h={`${info}%`} bg={'primary'} shadow={3} />
               );
             })}
-            <Box alignSelf={'center'}>
-              <IconButton
-                onPress={() => addData()}
-                icon={<Icon name="chevron-right" />}
-                borderRadius="full"
-                _icon={{
-                  color: 'orange.500',
-                  size: 'md',
-                }}
-                _hover={{
-                  bg: 'orange.600:alpha.20',
-                }}
-              />
-            </Box>
+            <View alignSelf={'center'} w={5} h={5}>
+              <Icon size={20} onPress={() => addData()} name="chevron-right" />
+            </View>
           </HStack>
           <Divider marginTop={1} w={'90%'} bg={'textLigth'} alignSelf={'center'} />
           <HStack justifyContent={'center'} space={4}>
-            {currentData.map(() => {
+            {currentData.map((_, index) => {
               return (
-                <Box w={7} h={1}>
+                <Box key={index} w={7} h={1}>
                   <Divider
                     orientation="vertical"
                     marginTop={1}
@@ -114,12 +92,10 @@ export const Chart = () => {
         </Box>
         <Box>
           <HStack justifyContent={'center'} space={4}>
-            {currentHour.map((hour) => {
+            {currentHour.map((hour, index) => {
               return (
-                <Box w={7} h={5}>
-                  <Text fontWeight={400} color={'primary'}>
-                    {hour}
-                  </Text>
+                <Box key={index} w={7} h={5}>
+                  <Text fontWeight={400}>{hour}</Text>
                 </Box>
               );
             })}

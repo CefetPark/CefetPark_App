@@ -4,8 +4,8 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 export interface LoginFormData {
-  cpf: string;
-  password: string;
+  login: string;
+  senha: string;
 }
 
 export const LoginForm = () => {
@@ -16,12 +16,12 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      cpf: '',
-      password: '',
+      login: '',
+      senha: '',
     },
   });
   const onSubmit = (data: LoginFormData) => {
-    authStore.setToken();
+    authStore.login(data);
   };
 
   return (
@@ -50,7 +50,7 @@ export const LoginForm = () => {
               />
             </>
           )}
-          name="cpf"
+          name="login"
         />
         <Controller
           control={control}
@@ -72,7 +72,7 @@ export const LoginForm = () => {
               />
             </>
           )}
-          name="password"
+          name="senha"
         />
       </VStack>
 

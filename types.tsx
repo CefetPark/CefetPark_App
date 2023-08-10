@@ -25,3 +25,8 @@ export type RootStackParamList = {
   Configs: undefined;
   ParkingLot: undefined;
 };
+
+export enum LoginTypes {
+  Security = 'Segurança',
+  Driver = 'Condutor'
+}
