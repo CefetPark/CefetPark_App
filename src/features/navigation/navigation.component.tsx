@@ -13,6 +13,8 @@ import { ParkingDetails } from '@screens/parking-details-screen';
 import ParkingManage from '@screens/parking-manage-screen';
 import ParkingForm from '@screens/parking-form-screen';
 import useStore from '@features/app/use-store';
+import removeScreen from '@screens/parking-remove-screen';
+import RemoveScreen from '@screens/parking-remove-screen';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 const BottomStack = createBottomTabNavigator<RootStackParamList>();
@@ -89,6 +91,11 @@ const HomeNavigator = observer(() => {
           <HomeStack.Screen
             name="ParkingForm"
             component={ParkingForm}
+            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+          />
+          <HomeStack.Screen
+            name="ParkingRemove"
+            component={RemoveScreen}
             options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
           />
         </>

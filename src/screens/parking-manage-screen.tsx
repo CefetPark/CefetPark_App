@@ -1,10 +1,8 @@
-import React from 'react';
-import { Maps } from '@features/parking-lot/maps';
 import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
-import { Box, VStack } from 'native-base';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ParkingLotManage from '@features/parking-lot/parking-lot-manage';
-import QrCodeHandle from '@features/parking-lot/qr-code-handle';
+import { Box, VStack } from 'native-base';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ParkingManage = () => {
   return (

@@ -17,6 +17,7 @@ export type HomeStackParamList = {
   ParkingManage: undefined;
   QrCodeHandle: undefined;
   ParkingForm: undefined;
+  ParkingRemove: undefined;
 };
 
 export type RootStackParamList = {
@@ -28,5 +29,5 @@ export type RootStackParamList = {
 
 export enum LoginTypes {
   Security = 'Segurança',
-  Driver = 'Condutor'
+  Driver = 'Condutor',
 }
