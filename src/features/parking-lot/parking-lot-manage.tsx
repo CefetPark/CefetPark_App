@@ -21,7 +21,7 @@ const ParkingManage = () => {
           justifyContent={'center'}
           alignItems={'center'}
         >
-          <Pressable onPress={() => navigation.navigate('ParkingForm' as never)}>
+          <Pressable onPress={() => navigation.navigate('ParkingRemove' as never)}>
             <VStack justifyContent={'center'} alignItems={'center'}>
               <Icon size={70} name="car-arrow-left" />
               <Text fontWeight={'bold'} fontSize={15}>
