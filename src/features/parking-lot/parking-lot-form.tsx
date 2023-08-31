@@ -4,9 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment-timezone';
 import { Button, FormControl, HStack, Input, Pressable, Spinner, Text, VStack } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useToast } from 'native-base';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import 'moment/locale/pt-br';
 import { Keyboard } from 'react-native';
 import HourPicker from '@features/ui/hour-picker';
@@ -24,12 +23,8 @@ const ParkingLotForm = () => {
   const [openDate, setOpenDate] = useState<boolean>(false);
   const [openHour, setOpenHour] = useState<boolean>(false);
   const navigate = useNavigation();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<VehicleFormData>();
-  const onSubmit: SubmitHandler<VehicleFormData> = async () => {
+
+  const handleSubmit = async () => {
     if (parkingLotStore.qrCodeData) {
       const qrCodeData: EntryRegister = {
         date: parkingLotStore.qrCodeData.entryDate,
@@ -50,7 +45,6 @@ const ParkingLotForm = () => {
       }
     }
   };
-  const submit = handleSubmit(onSubmit);
 
   const handlePlate = async (text: string) => {
     if (text.length === 7) {
@@ -77,7 +71,6 @@ const ParkingLotForm = () => {
           <Input
             h={'16'}
             size={'lg'}
-            {...register('plate')}
             rounded={12}
             id="plate"
             defaultValue={parkingLotStore.qrCodeData ? parkingLotStore.qrCodeData.plate : ''}
@@ -95,7 +88,6 @@ const ParkingLotForm = () => {
           <Input
             h={'16'}
             size={'lg'}
-            {...register('name')}
             rounded={12}
             id="name"
             defaultValue={parkingLotStore.qrCodeData ? parkingLotStore.qrCodeData.userName : ''}
@@ -173,7 +165,7 @@ const ParkingLotForm = () => {
           w={'45%'}
           variant={'solid'}
           backgroundColor={'primary'}
-          onPress={() => submit()}
+          onPress={() => handleSubmit()}
           _text={{ color: 'secondary', fontSize: 'md' }}
           isLoading={loading}
         >
