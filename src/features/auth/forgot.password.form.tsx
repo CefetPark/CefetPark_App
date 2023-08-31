@@ -1,19 +1,16 @@
 import { Button, FormControl, Input, Text, VStack } from 'native-base';
-import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 
 interface ForgotFormData {
   cpf: string;
 }
 
 export const ForgotPasswordForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotFormData>();
-  const onSubmit: SubmitHandler<ForgotFormData> = (event) => {};
-  const submit = handleSubmit(onSubmit);
+  const [dataForm, setDataForm] = useState<ForgotFormData>({ cpf: '' });
+
+  const handleSubmit = () => {
+    console.log(dataForm);
+  };
 
   return (
     <VStack space={10} w={'100%'} h={'100%'}>
@@ -23,7 +20,7 @@ export const ForgotPasswordForm = () => {
           <Input
             h={'16'}
             size={'lg'}
-            {...register('cpf', { required: true })}
+            onChangeText={(text) => setDataForm({ cpf: text })}
             rounded={12}
             id="cpf"
             autoCorrect={false}
@@ -37,7 +34,7 @@ export const ForgotPasswordForm = () => {
         h={12}
         variant={'solid'}
         backgroundColor={'primary'}
-        onPress={() => submit()}
+        onPress={() => handleSubmit()}
         size={'lg'}
       >
         <Text fontSize={'lg'} color={'textDark'}>
