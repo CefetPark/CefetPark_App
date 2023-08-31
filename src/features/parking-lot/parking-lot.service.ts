@@ -1,6 +1,7 @@
+import { Service } from '@features/app/http-service';
+import { authStore } from '@features/auth/auth.store';
+
 import { ParkingLotModel } from './parking-lot.model';
-import { Service } from "@features/app/http-service";
-import { authStore } from "@features/auth/auth.store";
 
 
 export class ParkingLotService {
@@ -9,6 +10,7 @@ export class ParkingLotService {
     constructor() { }
 
     async getParkingLots() {
-        return await this.httpService.getList('', ParkingLotModel, authStore.getToken())
+        return await this.httpService.getList('', authStore.getToken(), ParkingLotModel,)
     }
+
 }

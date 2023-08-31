@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "cefet-front-app",
-    "slug": "cefet-front-app",
+    "slug": "cefetpark",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logoPark.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.cefetrjpark.cefetpark"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c0bf567b-f2b7-48d0-8963-2f46f914cb29"
+      }
+    },
+    "owner": "cefetrjpark"
   }
 }

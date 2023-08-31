@@ -7,10 +7,9 @@ export class AuthService {
   constructor() { }
 
   async login(data: LoginFormData): Promise<{
-    isLoading: boolean;
     error: { statusError: number; errorMessage: string } | null;
     data: any;
   }> {
-    return await this.httpService.post<AuthModel>('login', AuthModel, { ...data }, '');
+    return await this.httpService.post<AuthModel>('/login', undefined, { ...data }, AuthModel,);
   }
 }

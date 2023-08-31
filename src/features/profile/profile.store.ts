@@ -4,10 +4,6 @@ class ProfileStore {
   constructor() {
     makeAutoObservable(this);
   }
-
-  setParkingLots() {}
-
-  getParkingLots() {}
 }
 
 export const profileStore = new ProfileStore();

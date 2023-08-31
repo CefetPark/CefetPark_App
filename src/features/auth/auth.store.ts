@@ -24,6 +24,7 @@ class AuthStore {
         this.authToken = req.data.token;
       })
     }
+    return req
   }
 
   logout() {

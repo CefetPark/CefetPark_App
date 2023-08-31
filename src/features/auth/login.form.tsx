@@ -1,6 +1,6 @@
 import useStore from '@features/app/use-store';
-import { Button, FormControl, Input, VStack } from 'native-base';
-import React from 'react';
+import { Button, FormControl, Input, Spinner, VStack, useToast } from 'native-base';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 export interface LoginFormData {
@@ -9,6 +9,8 @@ export interface LoginFormData {
 }
 
 export const LoginForm = () => {
+  const toast = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
   const { authStore } = useStore();
   const {
     control,
@@ -20,8 +22,26 @@ export const LoginForm = () => {
       senha: '',
     },
   });
+
+  const hadleError = (errorMessage: string) => {
+    toast.show({
+      description: errorMessage,
+      bgColor: 'danger',
+      placement: 'top',
+    });
+  };
+
   const onSubmit = (data: LoginFormData) => {
-    authStore.login(data);
+    setLoading(true);
+    authStore
+      .login(data)
+      .then((response) => {
+        if (response.error) {
+          hadleError(response.error.errorMessage);
+        }
+      })
+      .catch((error) => hadleError(error.msg))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -83,8 +103,9 @@ export const LoginForm = () => {
         variant={'solid'}
         backgroundColor={'primary'}
         _text={{ color: 'secondary', fontSize: 'md' }}
+        isLoading={loading}
       >
-        Entrar
+        {loading ? <Spinner size="sm" color="secondary" /> : 'Entrar'}
       </Button>
     </VStack>
   );

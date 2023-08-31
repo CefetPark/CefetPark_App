@@ -3,11 +3,13 @@ import { makeAutoObservable, observable, action, reaction, runInAction } from 'm
 import { ParkingLotModel } from './parking-lot.model';
 import { ParkingLotService } from './parking-lot.service';
 interface QrCodeData {
-  plate: string;
-  name: string;
-  car: string;
+  parkingLotId: number;
+  userId: number;
+  userName: string,
+  carId: number;
+  plate: string,
+  entryDate: Date
 }
-
 class ParkingLotStore {
   parkingLots: ParkingLotModel[] = [];
   currentParkingLot!: ParkingLotModel
