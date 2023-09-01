@@ -44,13 +44,4 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish update
-        run: |
-          branch_name="${{ steps.branch-name.outputs.branch }}"
-          if [ "$branch_name" = "main" ]; then
-            eas update --branch main --auto
-          elif [ "$branch_name" = "develop" ]; then
-            eas update --branch develop --auto
-          else
-            echo "Unsupported branch: $branch_name"
-            exit 1
-          fi
+        run: eas update --branch develop --auto
