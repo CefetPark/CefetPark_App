@@ -1,6 +1,7 @@
 import useStore from '@features/app/use-store';
+import { observer } from 'mobx-react-lite';
 import { Box, HStack, Progress, Text, VStack } from 'native-base';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ParkingInfoList = () => {
@@ -18,14 +19,14 @@ const ParkingInfoList = () => {
         <Box
           w="48%"
           h="48"
-          bg="blue.200"
+          bg="green.400"
           rounded="md"
           shadow={3}
           justifyContent={'center'}
           alignItems={'center'}
         >
           <VStack justifyContent={'center'} alignItems={'center'}>
-            <Icon size={70} name="car" />
+            <Icon size={70} name="alpha-p-box" />
             <Text fontWeight={'bold'} fontSize={15}>
               Vagas disponíveis:
             </Text>
@@ -37,14 +38,14 @@ const ParkingInfoList = () => {
         <Box
           w="48%"
           h="48"
-          bg="lightBlue.200"
+          bg="yellow.300"
           rounded="md"
           shadow={3}
           justifyContent={'center'}
           alignItems={'center'}
         >
           <VStack justifyContent={'center'} alignItems={'center'}>
-            <Icon size={70} name="car" />
+            <Icon size={70} name="car-multiple" />
             <Text fontWeight={'bold'} fontSize={15}>
               Vagas ocupadas:
             </Text>
@@ -57,14 +58,14 @@ const ParkingInfoList = () => {
       <Box
         w="100%"
         h="20"
-        bg="blue.500"
+        bg="primary"
         rounded="md"
         shadow={3}
         justifyContent={'center'}
         paddingX={10}
       >
         <VStack space={2} alignItems={'center'}>
-          <Text fontSize={20} fontWeight={500}>
+          <Text fontSize={20} fontWeight={500} color={'white'}>
             Lotação
           </Text>
           <Progress value={occupiedPercentage} _filledTrack={{ bg: progressColor }} w={'100%'} />
@@ -74,4 +75,4 @@ const ParkingInfoList = () => {
   );
 };
 
-export default ParkingInfoList;
+export default observer(ParkingInfoList);

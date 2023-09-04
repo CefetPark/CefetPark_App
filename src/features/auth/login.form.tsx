@@ -15,7 +15,9 @@ export const LoginForm = () => {
 
   const hadleError = (errorMessage: string) => {
     toast.show({
+      title: 'Algo deu errado!',
       description: errorMessage,
+      variant: 'subtle',
       bgColor: 'danger',
       placement: 'top',
     });

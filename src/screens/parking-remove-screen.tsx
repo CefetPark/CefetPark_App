@@ -40,8 +40,11 @@ const RemoveScreen = () => {
     const req = await registerStore.getRegisters(parkingLotStore.currentParkingLot.id);
     if (req.error) {
       toast.show({
+        title: 'Algo deu errado!',
         description: `${req.error.errorMessage}`,
+        variant: 'subtle',
         bgColor: 'danger',
+        placement: 'top',
       });
     } else {
       setCars(req.data);
@@ -58,11 +61,15 @@ const RemoveScreen = () => {
     const req = await registerStore.removeCar(data);
     if (req.error) {
       toast.show({
+        title: 'Algo deu errado!',
         description: 'Ocorreu um erro ao tentar remover o carro.',
-        bg: 'danger',
+        variant: 'subtle',
+        bgColor: 'danger',
+        placement: 'top',
       });
     } else {
       getCars();
+      parkingLotStore.loadParkingLots();
     }
   };
 

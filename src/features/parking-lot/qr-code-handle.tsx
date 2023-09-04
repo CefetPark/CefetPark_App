@@ -2,7 +2,7 @@ import useStore from '@features/app/use-store';
 import { useNavigation } from '@react-navigation/native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { observer } from 'mobx-react-lite';
-import { Box, Button, Center, Modal, Text, VStack } from 'native-base';
+import { Box, Button, Center, Modal, Text, VStack, useToast } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 
@@ -12,7 +12,8 @@ interface Params {
 }
 
 const QrCodeHandle = (data: Params) => {
-  const { parkingLotStore } = useStore();
+  const { parkingLotStore, userStore } = useStore();
+  const toast = useToast();
   const [error, setError] = useState<boolean>(false);
   const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState<boolean>(false);
@@ -35,17 +36,46 @@ const QrCodeHandle = (data: Params) => {
   }, [data.opened]);
 
   useEffect(() => {
-    if (parkingLotStore.qrCodeData) data.setOpened(false);
+    if (parkingLotStore.qrCodeData) {
+      data.setOpened(false);
+      navigation.navigate('ParkingForm' as never);
+    }
   }, [parkingLotStore.qrCodeData]);
 
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleBarCodeScanned = async ({ type, data }: { type: string; data: string }) => {
     setScanned(true);
     try {
-      const qrCodeData = JSON.parse(data);
-      parkingLotStore.setQrCodeData(qrCodeData);
-      navigation.navigate('ParkingForm' as never);
+      const req = await userStore.getApsNetUserId(data);
+      if (req.error) {
+        setError(true);
+        toast.show({
+          title: 'Algo deu errado!',
+          description:
+            'Ocorreu um problema ao tentar ler o QR-Code, se o problema persistir tente inserir manualmente.',
+          variant: 'subtle',
+          bgColor: 'danger',
+          placement: 'top',
+        });
+      } else {
+        parkingLotStore.setQrCodeData({
+          carId: req.data.cars[0].id,
+          parkingLotId: parkingLotStore.currentParkingLot.id,
+          plate: req.data.cars[0].plate,
+          userName: req.data.name,
+          userId: req.data.id,
+          entryDate: new Date(),
+        });
+      }
     } catch (error) {
       setError(true);
+      toast.show({
+        title: 'Algo deu errado!',
+        description:
+          'Ocorreu um problema ao tentar ler o QR-Code, se o problema persistir tente inserir manualmente.',
+        variant: 'subtle',
+        bgColor: 'danger',
+        placement: 'top',
+      });
     }
   };
 
@@ -58,7 +88,7 @@ const QrCodeHandle = (data: Params) => {
 
   return (
     <Modal size={'lg'} isOpen={data.opened} position={'relative'}>
-      <Modal.Content h={error ? 'auto' : '100%'} justifyContent={'space-between'}>
+      <Modal.Content h={error ? 'auto' : '100%'} w={'95%'} justifyContent={'space-between'}>
         <Modal.CloseButton
           onPress={() => {
             parkingLotStore.setQrCodeData(null);
@@ -71,9 +101,6 @@ const QrCodeHandle = (data: Params) => {
             <>
               <VStack space={3} flex={1} alignItems={'center'} justifyContent={'center'}>
                 <Box p={4} rounded="md">
-                  <Text>
-                    Ocorreu um erro ao tentar ler o QrCode! Tente novamente ou insira manualmente.
-                  </Text>
                   <Button
                     variant={'outline'}
                     borderColor={'primary'}

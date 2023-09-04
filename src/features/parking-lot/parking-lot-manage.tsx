@@ -15,7 +15,7 @@ const ParkingManage = () => {
         <Box
           w="48%"
           h="48"
-          bg="blue.400"
+          bg="danger"
           rounded="md"
           shadow={3}
           justifyContent={'center'}
@@ -33,7 +33,7 @@ const ParkingManage = () => {
         <Box
           w="48%"
           h="48"
-          bg="blue.200"
+          bg="green.400"
           rounded="md"
           shadow={3}
           justifyContent={'center'}

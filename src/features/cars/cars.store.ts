@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 
 import { CarsService } from './cars.service';
 import { parkingLotStore } from '@features/parking-lot';
@@ -9,7 +9,7 @@ export class CarsStore {
         makeAutoObservable(this);
     }
 
-    async getCarByPlate(plate: string) {
+    @action async getCarByPlate(plate: string) {
         const req = await this.carsService.getCarByPlate(plate)
         if (req.data) {
             parkingLotStore.setQrCodeData({

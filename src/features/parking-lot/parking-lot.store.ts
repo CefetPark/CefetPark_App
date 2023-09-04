@@ -11,17 +11,14 @@ interface QrCodeData {
   entryDate: Date
 }
 class ParkingLotStore {
-  parkingLots: ParkingLotModel[] = [];
-  currentParkingLot!: ParkingLotModel
+  @observable isLoading: boolean = false
+  @observable parkingLots: ParkingLotModel[] = [];
+  @observable currentParkingLot!: ParkingLotModel
   private parkingLotService = new ParkingLotService()
-  qrCodeData: QrCodeData | null = null;
+  @observable qrCodeData: QrCodeData | null = null;
 
   constructor() {
-    makeAutoObservable(this, {
-      qrCodeData: observable,
-      setParkingLots: action,
-      setQrCodeData: action,
-    });
+    makeAutoObservable(this);
 
     reaction(
       () => authStore.authToken,
@@ -35,20 +32,30 @@ class ParkingLotStore {
       })
   }
 
-  setCurrentParkingLot(parkingLotId: number) {
+  @action async loadParkingLots() {
+    if (authStore.authToken != '') {
+      const parkingLots = await this.parkingLotService.getParkingLots()
+      runInAction(() => {
+        this.parkingLots = parkingLots.data
+        this.currentParkingLot = parkingLots.data.filter((parkingLot: ParkingLotModel) => parkingLot.id == this.currentParkingLot.id)[0]
+      })
+    }
+  }
+
+  @action setCurrentParkingLot(parkingLotId: number) {
     const parkingLot: ParkingLotModel = this.parkingLots.filter(el => el.id == parkingLotId)[0] || null
     runInAction(() => {
       if (parkingLot) this.currentParkingLot = parkingLot
     })
   }
 
-  setQrCodeData(qrCodeData: QrCodeData | null) {
+  @action setQrCodeData(qrCodeData: QrCodeData | null) {
     runInAction(() => {
       this.qrCodeData = qrCodeData;
     })
   }
 
-  setParkingLots(parkingLots: ParkingLotModel[]) {
+  @action setParkingLots(parkingLots: ParkingLotModel[]) {
     runInAction(() => {
       this.parkingLots = parkingLots;
     })
