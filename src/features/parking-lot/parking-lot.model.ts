@@ -30,7 +30,7 @@ export class ParkingLotModel {
         id: 0,
         name: "",
         number: "",
-        complement: null,
+        complement: "",
         neighborhood: "",
         zipCode: "",
         longitude: "",

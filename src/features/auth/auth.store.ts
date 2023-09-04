@@ -1,22 +1,22 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction, observable, action } from 'mobx';
 import { LoginFormData } from './login.form';
 import { AuthService } from './auth.service';
 import { UserModel } from './auth.model';
 
 class AuthStore {
   private authService = new AuthService();
-  authToken = '';
-  user: UserModel | null = null;
+  @observable authToken = '';
+  @observable user: UserModel | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getToken() {
+  @action getToken() {
     return this.authToken
   }
 
-  async login(loginFormData: LoginFormData) {
+  @action async login(loginFormData: LoginFormData) {
     const req = await this.authService.login(loginFormData);
     if (req.data) {
       runInAction(() => {
@@ -27,7 +27,7 @@ class AuthStore {
     return req
   }
 
-  logout() {
+  @action logout() {
     runInAction(() => {
       this.authToken = ''
       this.user = null

@@ -1,7 +1,8 @@
 import { alias, createModelSchema, list, object, primitive, serializable } from 'serializr';
 
 export class UserModel {
-  aspNetUsersId = ''
+  id = '';
+  aspNetUsersId = '';
   cpf = '';
   enrollment = '';
   name = '';
@@ -23,9 +24,16 @@ export class AuthModel {
 class CarsModel {
   id = 0;
   plate = '';
-  colorId = 0;
-  modelId = 0;
+  color = '';
+  model = '';
 }
+
+createModelSchema(CarsModel, {
+  id: primitive(),
+  plate: alias('placa', primitive()),
+  color: alias('cor', primitive()),
+  model: alias('modelo', primitive()),
+})
 
 createModelSchema(AuthModel, {
   token: primitive(),
@@ -33,7 +41,8 @@ createModelSchema(AuthModel, {
 });
 
 createModelSchema(UserModel, {
-  aspNetUsersId: alias('aspNetUsers_id', primitive()),
+  id: primitive(),
+  aspNetUsersId: alias('aspNetUsers_Id', primitive()),
   cpf: primitive(),
   enrollment: alias('matricula', primitive()),
   name: alias('nome', primitive()),

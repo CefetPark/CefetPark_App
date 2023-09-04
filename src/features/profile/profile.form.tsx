@@ -1,25 +1,15 @@
-import React from 'react';
-import {
-  Avatar,
-  Box,
-  Button,
-  FormControl,
-  Input,
-  KeyboardAvoidingView,
-  Spacer,
-  Text,
-  VStack,
-} from 'native-base';
 import useStore from '@features/app/use-store';
+import { Avatar, Box, Button, Text, View, VStack } from 'native-base';
+import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Platform } from 'react-native';
+import { LoginTypes } from '@types';
 
 export const ProfileForm = () => {
   const { authStore } = useStore();
 
   return (
-    <KeyboardAvoidingView>
-      <VStack paddingX={5} space={4}>
+    <View flex={1}>
+      <VStack paddingX={5} flex={1} justifyContent={'space-evenly'}>
         <Box alignItems={'center'}>
           <Avatar
             size={'2xl'}
@@ -33,76 +23,98 @@ export const ProfileForm = () => {
             {authStore.user?.name}
           </Text>
         </Box>
-        <FormControl>
-          <FormControl.Label>CPF</FormControl.Label>
-          <Input
-            value={authStore.user?.cpf}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            pointerEvents="none"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>E-mail</FormControl.Label>
-          <Input
-            value={authStore.user?.mainEmail}
-            removeClippedSubviews={Platform.OS == 'android'}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            autoCapitalize="none"
-            pointerEvents="none"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Número</FormControl.Label>
-          <Input
-            value={authStore.user?.mainPhoneNumber}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            pointerEvents="none"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Matricula</FormControl.Label>
-          <Input
-            value={authStore.user?.enrollment}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            pointerEvents="none"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Departamento</FormControl.Label>
-          <Input
-            value={authStore.user?.department}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            pointerEvents="none"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Carro(s)</FormControl.Label>
-          <Input
-            value={authStore.user?.cars
-              .map((car) => car.plate)
-              .join(authStore.user?.cars.length > 1 ? ' - ' : '')}
-            isDisabled
-            size={'lg'}
-            editable={false}
-            pointerEvents="none"
-          />
-        </FormControl>
+        <Box>
+          <Text>CPF</Text>
+          <Box
+            borderRadius={12}
+            borderColor={'gray.300'}
+            borderWidth={1}
+            h={'12'}
+            paddingLeft={3}
+            justifyContent={'center'}
+          >
+            <Text>{authStore.user?.cpf}</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Text>E-mail</Text>
+          <Box
+            borderRadius={12}
+            borderColor={'gray.300'}
+            borderWidth={1}
+            h={'12'}
+            paddingLeft={3}
+            justifyContent={'center'}
+          >
+            <Text>{authStore.user?.mainEmail}</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Text>Número</Text>
+          <Box
+            borderRadius={12}
+            borderColor={'gray.300'}
+            borderWidth={1}
+            h={'12'}
+            paddingLeft={3}
+            justifyContent={'center'}
+          >
+            <Text>{authStore.user?.mainPhoneNumber}</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Text>Matricula</Text>
+          <Box
+            borderRadius={12}
+            borderColor={'gray.300'}
+            borderWidth={1}
+            h={'12'}
+            paddingLeft={3}
+            justifyContent={'center'}
+          >
+            <Text>{authStore.user?.enrollment}</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Text>Departamento</Text>
+          <Box
+            borderRadius={12}
+            borderColor={'gray.300'}
+            borderWidth={1}
+            h={'12'}
+            paddingLeft={3}
+            justifyContent={'center'}
+          >
+            <Text>{authStore.user?.department}</Text>
+          </Box>
+        </Box>
+        {authStore.user?.userType == LoginTypes.Driver ? (
+          <Box>
+            <Text>Carro(s)</Text>
+            <Box
+              borderRadius={12}
+              borderColor={'gray.300'}
+              borderWidth={1}
+              h={'12'}
+              paddingLeft={3}
+              justifyContent={'center'}
+            >
+              <Text>
+                {authStore.user?.cars
+                  .map((car) => car.plate)
+                  .join(authStore.user?.cars.length > 1 ? ' - ' : '')}
+              </Text>
+            </Box>
+          </Box>
+        ) : (
+          <></>
+        )}
         <Box paddingX={36}>
           <Button onPress={() => authStore.logout()} variant={'solid'} bg={'primary'} rounded={12}>
             Sair
           </Button>
         </Box>
       </VStack>
-    </KeyboardAvoidingView>
+    </View>
   );
 };

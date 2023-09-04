@@ -1,10 +1,10 @@
-import { observer } from 'mobx-react-lite';
 import { Image } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ForgotPasswordForm } from '../features/auth/forgot.password.form';
 import { AuthStackScreenProps } from 'types';
+
+import { ForgotPasswordForm } from '../features/auth/forgot.password.form';
 
 const ForgotPassword = ({ navigation }: AuthStackScreenProps<'ForgotPassword'>) => {
   return (

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 import { RegisterService } from "./register.service";
 import { CarToRemove } from "@screens/parking-remove-screen";
 
@@ -15,21 +15,21 @@ class RegisterStore {
         makeAutoObservable(this);
     }
 
-    async sendRegister(entryData: EntryRegister): Promise<{
+    @action async sendRegister(entryData: EntryRegister): Promise<{
         error: { statusError: number; errorMessage: string } | null;
         data: any;
     }> {
         return await this.registerService.sendRegister(entryData)
     }
 
-    async getRegisters(parkingLotId: number): Promise<{
+    @action async getRegisters(parkingLotId: number): Promise<{
         error: { statusError: number; errorMessage: string } | null;
         data: any;
     }> {
         return await this.registerService.getRegisters(parkingLotId)
     }
 
-    async removeCar(car: CarToRemove): Promise<{
+    @action async removeCar(car: CarToRemove): Promise<{
         error: { statusError: number; errorMessage: string } | null;
         data: any;
     }> {
