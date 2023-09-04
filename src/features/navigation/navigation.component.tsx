@@ -7,14 +7,14 @@ import Login from '@screens/login-screen';
 import Profile from '@screens/profile-screen';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { HomeStackParamList, RootStackParamList, StackParamList, LoginTypes } from '../../../types';
+import { HomeStackParamList, RootStackParamList, StackParamList, LoginTypes } from '@types';
 import { TabBarIcon } from './tabbar-icon';
 import { ParkingDetails } from '@screens/parking-details-screen';
 import ParkingManage from '@screens/parking-manage-screen';
 import ParkingForm from '@screens/parking-form-screen';
 import useStore from '@features/app/use-store';
-import removeScreen from '@screens/parking-remove-screen';
 import RemoveScreen from '@screens/parking-remove-screen';
+import QrCodeScreen from '@screens/qr-code-screen';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 const BottomStack = createBottomTabNavigator<RootStackParamList>();
@@ -59,57 +59,112 @@ const AuthNavigator = observer(() => {
   );
 });
 
-const HomeNavigator = observer(() => {
-  const { authStore } = useStore();
+const DriverNavigator = () => {
   return (
     <HomeStack.Navigator>
-      {authStore.user?.userType == LoginTypes.Driver ? (
-        <>
-          <HomeStack.Screen
-            name="Home"
-            component={homeScreen}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-          <HomeStack.Screen
-            name="ParkingDetails"
-            component={ParkingDetails}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-        </>
-      ) : (
-        <>
-          <HomeStack.Screen
-            name="Home"
-            component={homeScreen}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-          <HomeStack.Screen
-            name="ParkingDetails"
-            component={ParkingManage}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-          <HomeStack.Screen
-            name="ParkingForm"
-            component={ParkingForm}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-          <HomeStack.Screen
-            name="ParkingRemove"
-            component={RemoveScreen}
-            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
-          />
-        </>
-      )}
+      <HomeStack.Screen
+        name="Home"
+        component={homeScreen}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+      <HomeStack.Screen
+        name="ParkingDetails"
+        component={ParkingDetails}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
     </HomeStack.Navigator>
   );
-});
+};
 
-const BottomNavigator = () => {
+const SecurityNavigator = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={homeScreen}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+      <HomeStack.Screen
+        name="ParkingDetails"
+        component={ParkingManage}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+      <HomeStack.Screen
+        name="ParkingForm"
+        component={ParkingForm}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+      <HomeStack.Screen
+        name="ParkingRemove"
+        component={RemoveScreen}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+    </HomeStack.Navigator>
+  );
+};
+
+const BottomDriverNavigator = () => {
   return (
     <BottomStack.Navigator>
       <BottomStack.Screen
         name="HomeNav"
-        component={HomeNavigator}
+        component={DriverNavigator}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="home" color={color} focused={focused} />
+          ),
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            borderTopLeftRadius: 40,
+            borderTopEndRadius: 40,
+            height: 80,
+          },
+        }}
+      />
+      <BottomStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="user" color={color} focused={focused} />
+          ),
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            borderTopLeftRadius: 40,
+            borderTopEndRadius: 40,
+            height: 80,
+          },
+        }}
+      />
+
+      <BottomStack.Screen
+        name="QrCode"
+        component={QrCodeScreen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="qrcode" color={color} focused={focused} />
+          ),
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            borderTopLeftRadius: 40,
+            borderTopEndRadius: 40,
+            height: 80,
+          },
+        }}
+      />
+    </BottomStack.Navigator>
+  );
+};
+
+const BottomSecurityNavigator = () => {
+  return (
+    <BottomStack.Navigator>
+      <BottomStack.Screen
+        name="HomeNav"
+        component={SecurityNavigator}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="home" color={color} focused={focused} />
@@ -142,3 +197,12 @@ const BottomNavigator = () => {
     </BottomStack.Navigator>
   );
 };
+
+const BottomNavigator = observer(() => {
+  const { authStore } = useStore();
+  return authStore.user?.userType == LoginTypes.Driver ? (
+    <BottomDriverNavigator />
+  ) : (
+    <BottomSecurityNavigator />
+  );
+});

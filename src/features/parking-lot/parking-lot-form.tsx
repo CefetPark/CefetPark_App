@@ -32,16 +32,25 @@ const ParkingLotForm = () => {
         parkingLotId: parkingLotStore.qrCodeData.parkingLotId,
         userId: parkingLotStore.qrCodeData.userId,
       };
-
       const res = await registerStore.sendRegister(qrCodeData);
       if (res.error) {
         toast.show({
+          title: 'Algo deu errado!',
           description: res.error.errorMessage,
+          variant: 'subtle',
           bgColor: 'danger',
+          placement: 'top',
         });
       } else {
-        toast.show({ description: 'Dados enviados!', bgColor: 'success' });
+        toast.show({
+          title: 'Tudo certo!',
+          description: 'Os dados foram enviados com sucesso!',
+          variant: 'subtle',
+          bgColor: 'success',
+          placement: 'top',
+        });
         parkingLotStore.setQrCodeData(null);
+        parkingLotStore.loadParkingLots();
       }
     }
   };
@@ -54,8 +63,11 @@ const ParkingLotForm = () => {
         await carsStore.getCarByPlate(text);
       } catch (error) {
         toast.show({
+          title: 'Algo deu errado!',
           description: 'Erro ao buscar informações do carro.',
+          variant: 'subtle',
           bgColor: 'danger',
+          placement: 'top',
         });
       } finally {
         setLoading(false);

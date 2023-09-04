@@ -15,7 +15,6 @@ export type HomeStackParamList = {
   Home: undefined;
   ParkingDetails: undefined;
   ParkingManage: undefined;
-  QrCodeHandle: undefined;
   ParkingForm: undefined;
   ParkingRemove: undefined;
 };
@@ -23,8 +22,8 @@ export type HomeStackParamList = {
 export type RootStackParamList = {
   HomeNav: undefined;
   Profile: undefined;
-  Configs: undefined;
   ParkingLot: undefined;
+  QrCode: undefined;
 };
 
 export enum LoginTypes {
