@@ -1,10 +1,11 @@
-import { Service } from "@features/app/http-service";
-import { authStore } from "@features/auth/auth.store";
-import { EntryRegister } from "./register.store";
-import { RegisterModel } from "./register.model";
-import { CarToRemove } from "@screens/parking-remove-screen";
+import { Service } from '@features/app/http-service';
+import { authStore } from '@features/auth/auth.store';
+import { CarToRemove } from '@screens/parking-remove-screen';
 
-interface EntryPtRegister {
+import { RegisterModel } from './register.model';
+import { EntryRegister } from './register.store';
+
+export interface EntryPtRegister {
     dataEntrada: Date;
     estacionamento_Id: number;
     usuario_Id: number;

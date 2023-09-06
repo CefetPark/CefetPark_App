@@ -4,6 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "npx expo start -c",
+    "postinstall": "patch-package",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "build": "expo build",
@@ -54,6 +55,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-native": "^4.0.0",
+    "patch-package": "^8.0.0",
     "prettier": "^3.0.0",
     "typescript": "^5.1.3"
   },

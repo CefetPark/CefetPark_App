@@ -1,10 +1,10 @@
+import useStore from '@features/app/use-store';
 import { observer } from 'mobx-react-lite';
 import { View } from 'native-base';
 import React from 'react';
-import QRCode from 'react-native-qrcode-svg';
 import { Dimensions } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useStore from '@features/app/use-store';
 
 const QrCodeScreen = () => {
   const { authStore } = useStore();

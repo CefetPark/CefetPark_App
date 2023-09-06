@@ -1,24 +1,27 @@
 import useStore from '@features/app/use-store';
-import { useNavigation } from '@react-navigation/native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { observer } from 'mobx-react-lite';
-import { Box, Button, Center, Modal, Text, VStack, useToast } from 'native-base';
+import { Box, Button, Text, useToast, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 
-interface Params {
-  opened: boolean;
-  setOpened: Function;
+import { HandleData } from './handle-data-modal';
+import { DataForm } from './parking-lot-form';
+
+interface Props {
+  dataForm: DataForm;
+  setDataForm: Function;
+  setOpenedModal: Function;
 }
 
-const QrCodeHandle = (data: Params) => {
+const QrCodeHandle = (props: Props) => {
+  const { setDataForm, dataForm, setOpenedModal } = props;
   const { parkingLotStore, userStore } = useStore();
   const toast = useToast();
   const [error, setError] = useState<boolean>(false);
   const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const { height } = Dimensions.get('window');
-  const navigation = useNavigation();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -27,20 +30,6 @@ const QrCodeHandle = (data: Params) => {
     };
     getBarCodeScannerPermissions();
   }, []);
-
-  useEffect(() => {
-    if (data.opened) {
-      setScanned(false);
-      setError(false);
-    }
-  }, [data.opened]);
-
-  useEffect(() => {
-    if (parkingLotStore.qrCodeData) {
-      data.setOpened(false);
-      navigation.navigate('ParkingForm' as never);
-    }
-  }, [parkingLotStore.qrCodeData]);
 
   const handleBarCodeScanned = async ({ type, data }: { type: string; data: string }) => {
     setScanned(true);
@@ -57,14 +46,17 @@ const QrCodeHandle = (data: Params) => {
           placement: 'top',
         });
       } else {
-        parkingLotStore.setQrCodeData({
-          carId: req.data.cars[0].id,
-          parkingLotId: parkingLotStore.currentParkingLot.id,
-          plate: req.data.cars[0].plate,
-          userName: req.data.name,
-          userId: req.data.id,
-          entryDate: new Date(),
-        });
+        if (HandleData(req.data)) {
+          setDataForm({
+            ...dataForm,
+            carId: req.data.cars[0].id,
+            parkingLotId: parkingLotStore.currentParkingLot.id,
+            plate: req.data.cars[0].plate,
+            userName: req.data.name,
+            userId: req.data.id,
+          });
+        }
+        setOpenedModal(false);
       }
     } catch (error) {
       setError(true);
@@ -87,59 +79,44 @@ const QrCodeHandle = (data: Params) => {
   }
 
   return (
-    <Modal size={'lg'} isOpen={data.opened} position={'relative'}>
-      <Modal.Content h={error ? 'auto' : '100%'} w={'95%'} justifyContent={'space-between'}>
-        <Modal.CloseButton
-          onPress={() => {
-            parkingLotStore.setQrCodeData(null);
-            data.setOpened(false);
-          }}
-        />
-        <Modal.Header>Leitura de QrCode</Modal.Header>
-        <Modal.Body>
-          {error ? (
-            <>
-              <VStack space={3} flex={1} alignItems={'center'} justifyContent={'center'}>
-                <Box p={4} rounded="md">
-                  <Button
-                    variant={'outline'}
-                    borderColor={'primary'}
-                    _text={{ color: 'primary' }}
-                    mt={2}
-                    onPress={() => {
-                      setScanned(false);
-                      setError(false);
-                    }}
-                  >
-                    Tentar Novamente
-                  </Button>
-                  <Button
-                    variant={'outline'}
-                    borderColor={'primary'}
-                    _text={{ color: 'primary' }}
-                    mt={2}
-                    onPress={() => {
-                      parkingLotStore.setQrCodeData(null);
-                      data.setOpened(false);
-                      navigation.navigate('ParkingForm' as never);
-                    }}
-                  >
-                    Inserir manualmente
-                  </Button>
-                </Box>
-              </VStack>
-            </>
-          ) : (
-            <>
-              <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={{ height: height - height * 0.26, width: '100%' }}
-              />
-            </>
-          )}
-        </Modal.Body>
-      </Modal.Content>
-    </Modal>
+    <>
+      {error ? (
+        <>
+          <VStack space={3} flex={1} alignItems={'center'} justifyContent={'center'}>
+            <Box p={4} rounded="md">
+              <Button
+                variant={'outline'}
+                borderColor={'primary'}
+                _text={{ color: 'primary' }}
+                mt={2}
+                onPress={() => {
+                  setScanned(false);
+                  setError(false);
+                }}
+              >
+                Tentar Novamente
+              </Button>
+              <Button
+                variant={'outline'}
+                borderColor={'primary'}
+                _text={{ color: 'primary' }}
+                mt={2}
+                onPress={() => {}}
+              >
+                Inserir manualmente
+              </Button>
+            </Box>
+          </VStack>
+        </>
+      ) : (
+        <>
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={{ height: height - height * 0.26, width: '100%' }}
+          />
+        </>
+      )}
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
-import { action, makeAutoObservable } from "mobx"
-import { UserService } from "./users.service"
+import { action, makeAutoObservable } from 'mobx';
+
+import { UserService } from './users.service';
 
 class UsersStore {
     private usersService = new UserService()

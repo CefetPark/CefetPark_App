@@ -1,21 +1,15 @@
 import { authStore } from '@features/auth/auth.store';
-import { makeAutoObservable, observable, action, reaction, runInAction } from 'mobx';
+import { action, makeAutoObservable, observable, reaction, runInAction } from 'mobx';
+
 import { ParkingLotModel } from './parking-lot.model';
 import { ParkingLotService } from './parking-lot.service';
-interface QrCodeData {
-  parkingLotId: number;
-  userId: number;
-  userName: string,
-  carId: number;
-  plate: string,
-  entryDate: Date
-}
+
 class ParkingLotStore {
   @observable isLoading: boolean = false
   @observable parkingLots: ParkingLotModel[] = [];
   @observable currentParkingLot!: ParkingLotModel
+  @observable handleData: { type: 'car' | 'user' | 'default', data: any } = { type: 'default', data: null }
   private parkingLotService = new ParkingLotService()
-  @observable qrCodeData: QrCodeData | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -49,15 +43,15 @@ class ParkingLotStore {
     })
   }
 
-  @action setQrCodeData(qrCodeData: QrCodeData | null) {
-    runInAction(() => {
-      this.qrCodeData = qrCodeData;
-    })
-  }
-
   @action setParkingLots(parkingLots: ParkingLotModel[]) {
     runInAction(() => {
       this.parkingLots = parkingLots;
+    })
+  }
+
+  @action setHandleData(handleData: { type: 'car' | 'user' | 'default', data: any }) {
+    runInAction(() => {
+      this.handleData = handleData
     })
   }
 }

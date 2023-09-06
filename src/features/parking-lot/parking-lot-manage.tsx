@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { Box, HStack, Pressable, Text, VStack } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import ManageInsertModal from './manage-insert-modal';
-import QrCodeHandle from './qr-code-handle';
+import { Box, HStack, Pressable, Text, VStack } from 'native-base';
+import React from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ParkingManage = () => {
-  const [openedQuestion, setOpenedQuestion] = useState(false);
-  const [openedQrCode, setOpenedQrCode] = useState(false);
   const navigation = useNavigation();
   return (
     <VStack space={4} alignItems="center">
@@ -41,7 +37,7 @@ const ParkingManage = () => {
         >
           <Pressable
             onPress={() => {
-              setOpenedQuestion(true);
+              navigation.navigate('ParkingForm' as never);
             }}
           >
             <VStack justifyContent={'center'} alignItems={'center'}>
@@ -53,12 +49,6 @@ const ParkingManage = () => {
           </Pressable>
         </Box>
       </HStack>
-      <ManageInsertModal
-        opened={openedQuestion}
-        setOpened={setOpenedQuestion}
-        setOpenedQrCode={setOpenedQrCode}
-      />
-      <QrCodeHandle opened={openedQrCode} setOpened={setOpenedQrCode} />
     </VStack>
   );
 };

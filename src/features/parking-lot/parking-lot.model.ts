@@ -1,4 +1,4 @@
-import { alias, createModelSchema, identifier, object, primitive, serializable } from "serializr";
+import { alias, createModelSchema, identifier, object, primitive, serializable } from 'serializr';
 
 export class AddressModel {
     id = 0
