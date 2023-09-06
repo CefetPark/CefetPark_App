@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { Axios, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ClazzOrModelSchema, deserialize } from 'serializr';
 
 import { Env } from '../../../env';

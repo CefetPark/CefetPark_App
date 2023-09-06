@@ -1,7 +1,8 @@
-import { makeAutoObservable, runInAction, observable, action } from 'mobx';
-import { LoginFormData } from './login.form';
-import { AuthService } from './auth.service';
+import { action, makeAutoObservable, observable, runInAction } from 'mobx';
+
 import { UserModel } from './auth.model';
+import { AuthService } from './auth.service';
+import { LoginFormData } from './login.form';
 
 class AuthStore {
   private authService = new AuthService();

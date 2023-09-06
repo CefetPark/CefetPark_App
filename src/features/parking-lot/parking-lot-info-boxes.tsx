@@ -1,7 +1,7 @@
 import useStore from '@features/app/use-store';
 import { observer } from 'mobx-react-lite';
 import { Box, HStack, Progress, Text, VStack } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ParkingInfoList = () => {

@@ -94,7 +94,7 @@ const RemoveScreen = () => {
           </HStack>
         </React.Fragment>
       ) : (
-        <Box paddingX={7}>
+        <Box marginTop={'10%'} paddingX={5}>
           <Heading fontSize="xl" p="4" pb="3">
             <Text>{cars.length > 0 ? 'Estacionados' : 'Não há carros disponíveis'}</Text>
           </Heading>
@@ -146,7 +146,7 @@ const RemoveScreen = () => {
                     color="coolGray.800"
                     alignSelf="flex-start"
                   >
-                    {`${moment(item.entryDate).hour()}:${moment(item.entryDate).minute()}`}
+                    {`${moment(item.entryDate).format('HH:mm')}`}
                   </Text>
                   <Spacer />
                   <Center>
@@ -176,7 +176,10 @@ const RemoveScreen = () => {
                               bg={'danger'}
                               variant={'solid'}
                               onPress={() => {
-                                deleteCar({ id: item.id, dataSaida: new Date() });
+                                deleteCar({
+                                  id: item.id,
+                                  dataSaida: moment.tz('America/Sao_Paulo').toDate(),
+                                });
                               }}
                             >
                               Deletar
@@ -190,6 +193,7 @@ const RemoveScreen = () => {
               </Box>
             )}
           />
+          {}
         </Box>
       )}
     </SafeAreaView>

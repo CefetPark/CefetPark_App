@@ -1,8 +1,8 @@
 import useStore from '@features/app/use-store';
+import { LoginTypes } from '@types';
 import { Avatar, Box, Button, Text, View, VStack } from 'native-base';
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { LoginTypes } from '@types';
 
 export const ProfileForm = () => {
   const { authStore } = useStore();

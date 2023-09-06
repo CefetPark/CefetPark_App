@@ -1,11 +1,11 @@
-import React from 'react';
-import { Maps } from '@features/parking-lot/maps';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Box, VStack } from 'native-base';
-import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
-import { Chart } from '@features/parking-lot/parking-lot-chart';
-import { Linking } from 'react-native';
 import useStore from '@features/app/use-store';
+import { Maps } from '@features/parking-lot/maps';
+import { Chart } from '@features/parking-lot/parking-lot-chart';
+import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
+import { Box, VStack } from 'native-base';
+import React from 'react';
+import { Linking } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const ParkingDetails = () => {
   const { parkingLotStore } = useStore();

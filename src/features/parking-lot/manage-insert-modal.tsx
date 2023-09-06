@@ -1,56 +1,63 @@
-import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { Button, Center, Modal, VStack } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 
-interface Params {
-  opened: boolean;
-  setOpened: Function;
-  setOpenedQrCode: Function;
+import { DataForm } from './parking-lot-form';
+import QrCodeHandle from './qr-code-handle';
+
+interface Props {
+  dataForm: DataForm;
+  setDataForm: Function;
 }
 
-const manageInsertModal = ({ opened, setOpened, setOpenedQrCode }: Params) => {
-  const navigation = useNavigation();
+const manageInsertModal = (props: Props) => {
+  const { setDataForm, dataForm } = props;
+  const [opened, setOpened] = useState<boolean>(true);
+  const [qrCodeOpened, setQrCodeOpened] = useState<boolean>(false);
+
   return (
-    <Modal size={'lg'} isOpen={opened} position={'relative'}>
-      <Modal.Content justifyContent={'space-between'}>
-        <Modal.CloseButton
-          onPress={() => {
-            setOpened(false);
-          }}
-        />
-        <Modal.Header>Seleciona uma opção de inserção</Modal.Header>
+    <Modal isOpen={opened} position={'relative'}>
+      <Modal.Content w={'90%'} justifyContent={'space-between'}>
+        <Modal.Header>
+          {qrCodeOpened ? 'Leitura de QrCode' : 'Seleciona uma opção de inserção'}
+        </Modal.Header>
         <Modal.Body alignItems="center">
-          <VStack space={5} padding={5}>
-            <Center>
-              <Button
-                w={'100%'}
-                borderColor={'primary'}
-                variant={'outline'}
-                _text={{ color: 'primary' }}
-                onPress={() => {
-                  setOpened(false);
-                  setOpenedQrCode(true);
-                }}
-              >
-                Ler QrCode
-              </Button>
-            </Center>
-            <Center>
-              <Button
-                w={'100%'}
-                borderColor={'primary'}
-                variant={'outline'}
-                _text={{ color: 'primary' }}
-                onPress={() => {
-                  setOpened(false);
-                  navigation.navigate('ParkingForm' as never);
-                }}
-              >
-                Inserir Manualmente
-              </Button>
-            </Center>
-          </VStack>
+          {qrCodeOpened ? (
+            <QrCodeHandle
+              setOpenedModal={setOpened}
+              dataForm={dataForm}
+              setDataForm={setDataForm}
+            />
+          ) : (
+            <VStack space={5} padding={5}>
+              <Center>
+                <Button
+                  w={'100%'}
+                  borderColor={'primary'}
+                  variant={'outline'}
+                  _text={{ color: 'primary' }}
+                  onPress={() => {
+                    setQrCodeOpened(true);
+                  }}
+                >
+                  Ler QrCode
+                </Button>
+              </Center>
+              <Center>
+                <Button
+                  w={'100%'}
+                  borderColor={'primary'}
+                  variant={'outline'}
+                  _text={{ color: 'primary' }}
+                  onPress={() => {
+                    setOpened(false);
+                  }}
+                >
+                  Inserir Manualmente
+                </Button>
+              </Center>
+            </VStack>
+          )}
         </Modal.Body>
       </Modal.Content>
     </Modal>

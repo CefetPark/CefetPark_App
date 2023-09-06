@@ -1,6 +1,6 @@
-import { Service } from "@features/app/http-service"
-import { UserModel } from "@features/auth/auth.model"
-import { authStore } from "@features/auth/auth.store"
+import { Service } from '@features/app/http-service';
+import { UserModel } from '@features/auth/auth.model';
+import { authStore } from '@features/auth/auth.store';
 
 export class UserService {
     private httpService = new Service('AspnetUserId')

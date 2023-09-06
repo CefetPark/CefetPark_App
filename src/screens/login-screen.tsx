@@ -1,14 +1,14 @@
-import { Button, Image, KeyboardAvoidingView, Text } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
+import { Button, Image, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AuthStackScreenProps } from 'types';
 
 import { LoginForm } from '../features/auth/login.form';
-import { observer } from 'mobx-react-lite';
-import useStore from '@features/app/use-store';
 
-const Login = ({ navigation }: AuthStackScreenProps<'Login'>) => {
+const Login = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 50, padding: 20, alignItems: 'center' }}>
       <View>
@@ -25,7 +25,7 @@ const Login = ({ navigation }: AuthStackScreenProps<'Login'>) => {
       <Button
         alignSelf={'center'}
         margin={'10%'}
-        onPress={() => navigation.navigate('ForgotPassword')}
+        onPress={() => navigation.navigate('ForgotPassword' as never)}
         _text={{ color: 'primary', fontSize: 'md' }}
       >
         Esqueci minha senha

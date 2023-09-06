@@ -1,20 +1,21 @@
+import useStore from '@features/app/use-store';
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import {
   Box,
   CircleIcon,
+  Heading,
   HStack,
   Image,
-  Spacer,
-  Text,
   Pressable,
   Skeleton,
+  Spacer,
   Spinner,
-  Heading,
+  Text,
 } from 'native-base';
-import { RFValue } from 'react-native-responsive-fontsize';
 import React, { useEffect, useState } from 'react';
-import useStore from '@features/app/use-store';
-import { useNavigation } from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 import { ParkingLotModel } from './parking-lot.model';
 
 const ParkingList = () => {
