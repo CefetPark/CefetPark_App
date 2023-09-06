@@ -1,4 +1,4 @@
-import { alias, createModelSchema, list, object, primitive, serializable } from "serializr"
+import { alias, createModelSchema, list, object, primitive, serializable } from 'serializr';
 
 class UserModel {
     id = 0

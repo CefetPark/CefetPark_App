@@ -1,11 +1,12 @@
-import { CarsModel } from "@features/cars/cars.model"
-import { alias, createModelSchema, object, primitive, serializable } from "serializr"
+import { CarsModel } from '@features/cars/cars.model';
+import moment from 'moment-timezone';
+import { alias, createModelSchema, object, primitive, serializable } from 'serializr';
 
 export class RegisterModel {
     @serializable(primitive())
     id = 0
     @serializable(primitive())
-    entryDate = new Date()
+    entryDate = moment.tz('America/Sao_Paulo').toDate()
     @serializable(primitive())
     parkingLotId = 0
     @serializable(object(CarsModel))

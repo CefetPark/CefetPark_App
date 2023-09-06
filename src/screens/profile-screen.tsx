@@ -1,5 +1,4 @@
 import { ProfileForm } from '@features/profile';
-import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

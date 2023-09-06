@@ -97,7 +97,7 @@ const SecurityNavigator = () => {
       <HomeStack.Screen
         name="ParkingRemove"
         component={RemoveScreen}
-        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+        options={{ headerTransparent: true, headerTitle: '' }}
       />
     </HomeStack.Navigator>
   );

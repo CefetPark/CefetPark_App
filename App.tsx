@@ -1,11 +1,10 @@
-import React from 'react';
+import { rootStore, StoreProvider } from '@features/app';
 import { NativeBaseProvider } from 'native-base';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Navigation } from './src/features/navigation/index';
 
 import { customTheme } from './nativeBaseTheme';
-import { StoreProvider, rootStore } from '@features/app';
-import QrCodeHandle from '@features/parking-lot/qr-code-handle';
+import { Navigation } from './src/features/navigation';
 
 export default function App() {
   return (
@@ -13,7 +12,6 @@ export default function App() {
       <NativeBaseProvider theme={customTheme}>
         <SafeAreaProvider>
           <Navigation />
-          {/* <QrCodeHandle /> */}
         </SafeAreaProvider>
       </NativeBaseProvider>
     </StoreProvider>

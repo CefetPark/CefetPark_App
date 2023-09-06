@@ -1,57 +1,122 @@
+import 'moment/locale/pt-br';
+
 import useStore from '@features/app/use-store';
-import DatePicker from '@features/ui/date-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment-timezone';
-import { Button, FormControl, HStack, Input, Pressable, Spinner, Text, VStack } from 'native-base';
+import {
+  Button,
+  FormControl,
+  HStack,
+  Input,
+  Pressable,
+  Spinner,
+  Text,
+  useToast,
+  View,
+  VStack,
+} from 'native-base';
 import React, { useState } from 'react';
-import { useToast } from 'native-base';
-import 'moment/locale/pt-br';
-import { Keyboard } from 'react-native';
-import HourPicker from '@features/ui/hour-picker';
-import { EntryRegister } from '@features/register/register.store';
+import { Keyboard, Platform } from 'react-native';
 
-interface VehicleFormData {
-  name: string;
+import { HandleData, HandleDataModal } from './handle-data-modal';
+import ManageInsertModal from './manage-insert-modal';
+
+export interface DataForm {
+  parkingLotId: number;
+  userId: number;
+  userName: string;
+  carId: number;
   plate: string;
+  date: Date;
 }
+
+const getDate = (date?: any) => {
+  const currentDateInSaoPaulo = date
+    ? moment(date).tz('America/Sao_Paulo')
+    : moment().tz('America/Sao_Paulo');
+  return currentDateInSaoPaulo.toDate();
+};
 
 const ParkingLotForm = () => {
   const toast = useToast();
+
   const [loading, setLoading] = useState<boolean>(false);
+  const [dataForm, setDataForm] = useState<DataForm>({
+    carId: 0,
+    date: getDate(),
+    parkingLotId: 0,
+    userId: 0,
+    plate: '',
+    userName: '',
+  });
   const { parkingLotStore, carsStore, registerStore } = useStore();
-  const [openDate, setOpenDate] = useState<boolean>(false);
-  const [openHour, setOpenHour] = useState<boolean>(false);
   const navigate = useNavigation();
 
-  const handleSubmit = async () => {
-    if (parkingLotStore.qrCodeData) {
-      const qrCodeData: EntryRegister = {
-        date: parkingLotStore.qrCodeData.entryDate,
-        carId: parkingLotStore.qrCodeData.carId,
-        parkingLotId: parkingLotStore.qrCodeData.parkingLotId,
-        userId: parkingLotStore.qrCodeData.userId,
-      };
-      const res = await registerStore.sendRegister(qrCodeData);
-      if (res.error) {
-        toast.show({
-          title: 'Algo deu errado!',
-          description: res.error.errorMessage,
-          variant: 'subtle',
-          bgColor: 'danger',
-          placement: 'top',
-        });
-      } else {
-        toast.show({
-          title: 'Tudo certo!',
-          description: 'Os dados foram enviados com sucesso!',
-          variant: 'subtle',
-          bgColor: 'success',
-          placement: 'top',
-        });
-        parkingLotStore.setQrCodeData(null);
-        parkingLotStore.loadParkingLots();
+  const [date, setDate] = useState(getDate());
+  const [time, setTime] = useState(getDate());
+  const [mode, setMode] = useState<'date' | 'time' | 'datetime'>(
+    Platform.OS === 'ios' ? 'datetime' : 'date'
+  );
+  const [show, setShow] = useState(false);
+
+  const onChange = (event: any, selectedValue: any) => {
+    setShow(Platform.OS === 'ios');
+    if (mode == 'datetime') {
+      setDate(selectedValue);
+      setDataForm({ ...dataForm, date: getDate(selectedValue) });
+    } else if (mode == 'date') {
+      if (selectedValue) {
+        const currentDate = selectedValue || getDate();
+        setDate(currentDate);
+        setDataForm({ ...dataForm, date: getDate(selectedValue) });
       }
+      setMode('time');
+      setShow(Platform.OS !== 'ios');
+    } else {
+      const selectedTime = selectedValue || getDate();
+      setTime(selectedTime);
+      setShow(Platform.OS === 'ios');
+      setMode(Platform.OS === 'ios' ? 'datetime' : 'date');
+    }
+  };
+  const showMode = (currentMode: 'datetime' | 'date') => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const handleSubmit = async () => {
+    setDataForm({
+      ...dataForm,
+      date: new Date(dataForm.date.setHours(dataForm.date.getHours() - 3)),
+    });
+    const res = await registerStore.sendRegister(dataForm);
+    if (res.error) {
+      toast.show({
+        title: 'Algo deu errado!',
+        description: res.error.errorMessage,
+        variant: 'subtle',
+        bgColor: 'danger',
+        placement: 'top',
+      });
+    } else {
+      setDataForm({
+        carId: 0,
+        date: getDate(),
+        parkingLotId: parkingLotStore.currentParkingLot.id,
+        plate: '',
+        userId: 0,
+        userName: '',
+      });
+      toast.show({
+        title: 'Tudo certo!',
+        description: 'Os dados foram enviados com sucesso!',
+        variant: 'subtle',
+        bgColor: 'success',
+        placement: 'top',
+      });
+      parkingLotStore.loadParkingLots();
     }
   };
 
@@ -59,9 +124,8 @@ const ParkingLotForm = () => {
     if (text.length === 7) {
       setLoading(true);
       Keyboard.dismiss();
-      try {
-        await carsStore.getCarByPlate(text);
-      } catch (error) {
+      const { data, error } = await carsStore.getCarByPlate(text);
+      if (error) {
         toast.show({
           title: 'Algo deu errado!',
           description: 'Erro ao buscar informações do carro.',
@@ -69,14 +133,24 @@ const ParkingLotForm = () => {
           bgColor: 'danger',
           placement: 'top',
         });
-      } finally {
-        setLoading(false);
+      } else {
+        if (HandleData(data)) {
+          setDataForm({
+            ...dataForm,
+            carId: data.id,
+            parkingLotId: parkingLotStore.currentParkingLot.id,
+            plate: data.plate,
+            userId: data.users[0].id,
+            userName: data.users[0].name,
+          });
+        }
       }
+      setLoading(false);
     }
   };
 
   return (
-    <VStack space={'16'} w={'100%'}>
+    <VStack flex={1} justifyContent={'center'}>
       <VStack space={4}>
         <FormControl>
           <FormControl.Label htmlFor="plate">Placa</FormControl.Label>
@@ -85,7 +159,7 @@ const ParkingLotForm = () => {
             size={'lg'}
             rounded={12}
             id="plate"
-            defaultValue={parkingLotStore.qrCodeData ? parkingLotStore.qrCodeData.plate : ''}
+            defaultValue={dataForm.plate ? dataForm.plate : ''}
             autoCorrect={false}
             autoCapitalize="none"
             maxLength={7}
@@ -96,21 +170,21 @@ const ParkingLotForm = () => {
           />
         </FormControl>
         <FormControl>
-          <FormControl.Label htmlFor="name">Nome do usuário</FormControl.Label>
+          <FormControl.Label htmlFor="name">Nome do motorista</FormControl.Label>
           <Input
             h={'16'}
             size={'lg'}
             rounded={12}
             id="name"
-            defaultValue={parkingLotStore.qrCodeData ? parkingLotStore.qrCodeData.userName : ''}
+            defaultValue={dataForm.userName}
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Digite o nome"
             isReadOnly
           />
         </FormControl>
-        <FormControl>
-          <FormControl.Label htmlFor="entryDate">Data de entrada</FormControl.Label>
+        <View>
+          <FormControl.Label htmlFor="name">Data</FormControl.Label>
           <Pressable
             justifyContent={'center'}
             paddingLeft={2}
@@ -119,73 +193,82 @@ const ParkingLotForm = () => {
             h={'16'}
             borderColor={'gray.300'}
             borderWidth={1}
-            onPress={() => {
-              if (parkingLotStore.qrCodeData) setOpenDate(true);
-            }}
+            onPress={() => showMode(Platform.OS === 'ios' ? 'datetime' : 'date')}
           >
             <Text fontSize={18}>
-              {moment(parkingLotStore.qrCodeData?.entryDate)
-                .locale('pt-br')
-                .format('LL') || ''}
+              {Platform.OS === 'ios' ? formatDateIOS(date) : formatDate(date, time)}
             </Text>
           </Pressable>
-        </FormControl>
-        {openDate && parkingLotStore.qrCodeData && (
-          <DatePicker open={openDate} setOpen={setOpenDate} />
-        )}
-        <FormControl>
-          <FormControl.Label htmlFor="entryDate">Hora da entrada</FormControl.Label>
-          <Pressable
-            justifyContent={'center'}
-            paddingLeft={2}
+          {show && (
+            <View paddingRight={5} paddingTop={5}>
+              <DateTimePicker
+                style={{ alignSelf: 'flex-start' }}
+                maximumDate={getDate()}
+                timeZoneOffsetInMinutes={-3 * 60}
+                value={date}
+                display={Platform.OS === 'ios' ? 'compact' : 'default'}
+                locale="pt-br"
+                mode={mode}
+                onChange={onChange}
+              />
+              {Platform.OS === 'ios' ? (
+                <Button
+                  variant={'solid'}
+                  bg={'primary'}
+                  rounded={12}
+                  alignSelf={'flex-end'}
+                  onPress={() => setShow(false)}
+                >
+                  Confirmar data
+                </Button>
+              ) : (
+                <></>
+              )}
+            </View>
+          )}
+        </View>
+        <HStack justifyContent={'space-between'} paddingY={5}>
+          <Button
             rounded={12}
-            id="entryDate"
-            h={'16'}
-            borderColor={'gray.300'}
-            borderWidth={1}
+            w={'45%'}
+            variant={'outline'}
             onPress={() => {
-              if (parkingLotStore.qrCodeData) setOpenHour(true);
+              navigate.goBack();
             }}
+            _text={{ color: 'primary', fontSize: 'md' }}
           >
-            <Text fontSize={18}>
-              {moment(parkingLotStore.qrCodeData?.entryDate)
-                .locale('pt-br')
-                .format('LT') || ''}
-            </Text>
-          </Pressable>
-        </FormControl>
-        {openHour && parkingLotStore.qrCodeData && (
-          <HourPicker open={openHour} setOpen={setOpenHour} />
-        )}
+            Voltar
+          </Button>
+          <Button
+            rounded={12}
+            w={'45%'}
+            variant={'solid'}
+            backgroundColor={'primary'}
+            onPress={() => handleSubmit()}
+            _text={{ color: 'secondary', fontSize: 'md' }}
+            isLoading={loading}
+          >
+            {loading ? <Spinner size="sm" color="secondary" /> : 'Enviar'}
+          </Button>
+        </HStack>
       </VStack>
 
-      <HStack justifyContent={'space-between'}>
-        <Button
-          rounded={12}
-          w={'45%'}
-          variant={'outline'}
-          onPress={() => {
-            parkingLotStore.setQrCodeData(null);
-            navigate.goBack();
-          }}
-          _text={{ color: 'primary', fontSize: 'md' }}
-        >
-          Voltar
-        </Button>
-        <Button
-          rounded={12}
-          w={'45%'}
-          variant={'solid'}
-          backgroundColor={'primary'}
-          onPress={() => handleSubmit()}
-          _text={{ color: 'secondary', fontSize: 'md' }}
-          isLoading={loading}
-        >
-          {loading ? <Spinner size="sm" color="secondary" /> : 'Enviar'}
-        </Button>
-      </HStack>
+      <ManageInsertModal dataForm={dataForm} setDataForm={setDataForm} />
+      <HandleDataModal dataForm={dataForm} setDataForm={setDataForm} />
     </VStack>
   );
 };
 
 export default observer(ParkingLotForm);
+
+const formatDate = (date: any, time: any) => {
+  return `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()} ${time.getHours()}:${time.getMinutes()}`;
+};
+
+const formatDateIOS = (date: Date) => {
+  return `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+};

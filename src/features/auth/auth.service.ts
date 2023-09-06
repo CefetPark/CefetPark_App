@@ -1,6 +1,7 @@
+import { Service } from '@features/app/http-service';
+
 import { AuthModel } from './auth.model';
 import { LoginFormData } from './login.form';
-import { Service } from '@features/app/http-service';
 
 export class AuthService {
   private httpService = new Service('Auth')

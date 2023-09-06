@@ -3,6 +3,5 @@ function getApiUrl() {
 }
 
 export const Env = {
-  // Karoo API
   baseUrl: getApiUrl(),
 };

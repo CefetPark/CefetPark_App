@@ -1,6 +1,7 @@
-import { Service } from "@features/app/http-service";
-import { CarsModel } from "./cars.model";
-import { authStore } from "@features/auth/auth.store";
+import { Service } from '@features/app/http-service';
+import { authStore } from '@features/auth/auth.store';
+
+import { CarsModel } from './cars.model';
 
 export class CarsService {
     private httpService = new Service('Carro')
