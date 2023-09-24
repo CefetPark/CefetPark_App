@@ -1,20 +1,22 @@
+import useStore from '@features/app/use-store';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ForgotPassword from '@screens/forgot-password-screen';
 import homeScreen from '@screens/home-screen';
 import Login from '@screens/login-screen';
+import { ParkingDetails } from '@screens/parking-details-screen';
+import ParkingForm from '@screens/parking-form-screen';
+import ParkingManage from '@screens/parking-manage-screen';
+import RemoveScreen from '@screens/parking-remove-screen';
 import Profile from '@screens/profile-screen';
+import QrCodeScreen from '@screens/qr-code-screen';
+import QueueScreen from '@screens/queue-screen';
+import { HomeStackParamList, LoginTypes, RootStackParamList, StackParamList } from '@types';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { HomeStackParamList, RootStackParamList, StackParamList, LoginTypes } from '@types';
+
 import { TabBarIcon } from './tabbar-icon';
-import { ParkingDetails } from '@screens/parking-details-screen';
-import ParkingManage from '@screens/parking-manage-screen';
-import ParkingForm from '@screens/parking-form-screen';
-import useStore from '@features/app/use-store';
-import RemoveScreen from '@screens/parking-remove-screen';
-import QrCodeScreen from '@screens/qr-code-screen';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 const BottomStack = createBottomTabNavigator<RootStackParamList>();
@@ -70,7 +72,7 @@ const DriverNavigator = () => {
       <HomeStack.Screen
         name="ParkingDetails"
         component={ParkingDetails}
-        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: true, headerBackTitle: 'voltar' }}
       />
     </HomeStack.Navigator>
   );
@@ -127,7 +129,7 @@ const BottomDriverNavigator = () => {
         component={Profile}
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="user" color={color} focused={focused} />
+            <TabBarIcon name="account" color={color} focused={focused} />
           ),
           headerShown: false,
           tabBarShowLabel: false,
@@ -145,6 +147,23 @@ const BottomDriverNavigator = () => {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="qrcode" color={color} focused={focused} />
+          ),
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            borderTopLeftRadius: 40,
+            borderTopEndRadius: 40,
+            height: 80,
+          },
+        }}
+      />
+
+      <BottomStack.Screen
+        name="Queue"
+        component={QueueScreen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="human-queue" color={color} focused={focused} />
           ),
           headerShown: false,
           tabBarShowLabel: false,
@@ -183,7 +202,7 @@ const BottomSecurityNavigator = () => {
         component={Profile}
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="user" color={color} focused={focused} />
+            <TabBarIcon name="account" color={color} focused={focused} />
           ),
           headerShown: false,
           tabBarShowLabel: false,

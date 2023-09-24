@@ -1,7 +1,7 @@
 import React from 'react';
 import useStore from '@features/app/use-store';
 import { observer } from 'mobx-react-lite';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Platform } from 'react-native';
 
 export const TabBarIcon = observer((props: any) => {

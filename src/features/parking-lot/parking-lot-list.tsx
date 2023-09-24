@@ -23,31 +23,47 @@ const ParkingList = () => {
   const navigation = useNavigation();
   const [parkingLots, setParkingLots] = useState<ParkingLotModel[] | null>(null);
 
+  const getColorByOccupancy = (parkingLot: ParkingLotModel) => {
+    const percent = Math.floor(
+      ((parkingLot.totalParkingSpots - parkingLot.freeSpots) /
+        parkingLot.totalParkingSpots) *
+      100
+    )
+    if (percent < 40) {
+      return 'success';
+    } else if (percent <= 80) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+  };
+
   useEffect(() => {
     setParkingLots(parkingLotStore.parkingLots);
   }, [parkingLotStore.parkingLots]);
 
   return (
-    <Box flex={1}>
+    <Box flex={1} justifyContent={'center'}>
       {parkingLots ? (
-        <>
+        <Box flex={1} justifyContent={'center'}>
           {parkingLots.map((parkingLot) => (
             <React.Fragment key={parkingLot.id}>
               <Pressable
                 onPress={() => {
-                  parkingLotStore.setCurrentParkingLot(parkingLot.id);
+                  parkingLotStore.setCurrentParkingLot(parkingLot.id)
                   navigation.navigate('ParkingDetails' as never);
                 }}
               >
                 <HStack
                   flexDir={'row'}
                   justifyContent={'space-evenly'}
-                  h={'20'}
-                  w={'85%'}
+                  h={'24'}
+                  paddingX={5}
                   alignSelf={'center'}
                   rounded={'md'}
-                  backgroundColor={'gray.300'}
+                  backgroundColor={'light.50'}
                   shadow={'5'}
+                  mb={'5%'}
                 >
                   <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
                     <Image
@@ -62,15 +78,19 @@ const ParkingList = () => {
                       {parkingLot?.name}
                     </Text>
                   </Box>
+
                   <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
-                    <CircleIcon size="3" mt="0.5" color="emerald.500" />
+                    <CircleIcon
+                      size="3"
+                      mt="0.5"
+                      color={getColorByOccupancy(parkingLot)}
+                    />
                   </Box>
                 </HStack>
               </Pressable>
-              <Spacer />
             </React.Fragment>
           ))}
-        </>
+        </Box>
       ) : (
         <>
           <React.Fragment>
