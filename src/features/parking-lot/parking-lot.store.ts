@@ -59,7 +59,10 @@ class ParkingLotStore {
     const parkingLot = await this.parkingLotService.getCurrentParkingLot(parkingLotId.toString())
     if (parkingLot) {
       runInAction(() => {
-        if (parkingLot) this.currentParkingLot = parkingLot.data
+        if (parkingLot.data) {
+          this.parkingLots = this.parkingLots.map((el) => { return el.id == parkingLot.data.id ? parkingLot.data : el })
+          this.currentParkingLot = parkingLot.data
+        }
       })
       return true
     }

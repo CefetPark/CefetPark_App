@@ -13,7 +13,7 @@ import {
   Spinner,
   Text,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { ParkingLotModel } from './parking-lot.model';
@@ -21,7 +21,6 @@ import { ParkingLotModel } from './parking-lot.model';
 const ParkingList = () => {
   const { parkingLotStore } = useStore();
   const navigation = useNavigation();
-  const [parkingLots, setParkingLots] = useState<ParkingLotModel[] | null>(null);
 
   const getColorByOccupancy = (parkingLot: ParkingLotModel) => {
     const percent = Math.floor(
@@ -38,15 +37,11 @@ const ParkingList = () => {
     }
   };
 
-  useEffect(() => {
-    setParkingLots(parkingLotStore.parkingLots);
-  }, [parkingLotStore.parkingLots]);
-
   return (
     <Box flex={1} justifyContent={'center'}>
-      {parkingLots ? (
+      {parkingLotStore.parkingLots ? (
         <Box flex={1} justifyContent={'center'}>
-          {parkingLots.map((parkingLot) => (
+          {parkingLotStore.parkingLots.map((parkingLot) => (
             <React.Fragment key={parkingLot.id}>
               <Pressable
                 onPress={() => {
