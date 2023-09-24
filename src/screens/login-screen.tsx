@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { Button, Image, Text } from 'native-base';
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { LoginForm } from '../features/auth/login.form';
@@ -10,7 +10,7 @@ import { LoginForm } from '../features/auth/login.form';
 const Login = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 50, padding: 20, alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: 10, padding: 20, alignItems: 'center' }}>
       <View>
         <Image
           resizeMode="contain"
@@ -30,15 +30,6 @@ const Login = () => {
       >
         Esqueci minha senha
       </Button>
-      <Text
-        alignSelf={'center'}
-        position={'absolute'}
-        bottom={0}
-        color={'textLigth'}
-        style={{ marginBottom: 10 }}
-      >
-        Made with &#10084; by M3
-      </Text>
     </SafeAreaView>
   );
 };

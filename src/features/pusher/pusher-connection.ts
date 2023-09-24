@@ -35,15 +35,16 @@ export class PusherConnectionStore {
 
         this._pusherConnection = new Pusher(PusherKeys.key, {
             cluster: PusherKeys.cluster,
-            enabledTransports: ['ws', 'wss'],
+            enabledTransports: ['ws'],
         })
 
         this._pusherConnection.connection.bind('error', (error: Error) => {
             console.log(error)
         })
         this._pusherConnection.connection.bind('connected', () => {
-            this.connectChannel()
+            this._pusherConnection?.connect()
             this.connected = true
+            this.connectChannel()
         })
         this._pusherConnection.connection.bind('unavailable', () => {
             this.connected = false
@@ -56,46 +57,13 @@ export class PusherConnectionStore {
         })
     }
 
-    private bind(event: string, callback: (param: any) => void): void {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const $this = this
-        this._channel?.bind(event, (msg: any) => {
-            if (msg && msg.ack) {
-                const ack = msg.ack
-                const eventType = event.substring(7)
-                const time = dayjs(msg.horario)
-
-                let eventReceived = false
-
-                if ($this.antiSpam[eventType]) {
-                    eventReceived = $this.antiSpam[eventType].some((e: any) => {
-                        return e.ack === ack && e.horario === time
-                    })
-                } else {
-                    $this.antiSpam[eventType] = []
-                }
-
-                if (!eventReceived) {
-                    $this.antiSpam[eventType].push({ ack, horario: time })
-                    callback(msg)
-                }
-
-                $this.antiSpam[eventType].reduce((item: any) => {
-                    return dayjs(item.horario) <= dayjs().subtract(10, 'minutes')
-                })
-            } else {
-                callback(msg)
-            }
-        })
-    }
-
     private connectChannel() {
         if (!this._connected) return
-        const aspNetUserId = authStore.user?.aspNetUsersId
-        this._channel = this._pusherConnection?.subscribe(`waiting-list-${aspNetUserId}`)
+        this._channel = this._pusherConnection?.subscribe(`my-channel`)
 
-        this.bind("pusher:subscription_error", () => { console.log('error') })
-        this.bind("pusher:subscription_succeeded", () => { console.log('sucesso') })
+        this._channel?.bind("pusher:subscription_succeeded", (event: any) => { console.log(event) })
+        this._channel?.bind("pusher:subscription_error", (event: any) => { console.log(event) })
+        this._channel?.bind("my-event", (event: any) => { })
     }
 }
 

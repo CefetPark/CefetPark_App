@@ -60,6 +60,7 @@ const ParkingLotForm = () => {
     Platform.OS === 'ios' ? 'datetime' : 'date'
   );
   const [show, setShow] = useState(false);
+  const [error, setError] = useState(false)
 
   const onChange = (event: any, selectedValue: any) => {
     setShow(Platform.OS === 'ios');
@@ -121,11 +122,13 @@ const ParkingLotForm = () => {
   };
 
   const handlePlate = async (text: string) => {
+    setError(false)
     if (text.length === 7) {
       setLoading(true);
       Keyboard.dismiss();
       const { data, error } = await carsStore.getCarByPlate(text);
       if (error) {
+        setError(true)
         toast.show({
           title: 'Algo deu errado!',
           description: 'Erro ao buscar informações do carro.',
@@ -180,7 +183,7 @@ const ParkingLotForm = () => {
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Digite o nome"
-            isReadOnly
+            isReadOnly={!error}
           />
         </FormControl>
         <View>
@@ -257,18 +260,16 @@ const ParkingLotForm = () => {
       <HandleDataModal dataForm={dataForm} setDataForm={setDataForm} />
     </VStack>
   );
-};
+}
 
 export default observer(ParkingLotForm);
 
 const formatDate = (date: any, time: any) => {
-  return `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()} ${time.getHours()}:${time.getMinutes()}`;
-};
+  return `${date.getDate()}/${date.getMonth() + 1
+    }/${date.getFullYear()} ${time.getHours()}:${time.getMinutes()}`;
+}
 
 const formatDateIOS = (date: Date) => {
-  return `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
-};
+  return `${date.getDate()}/${date.getMonth() + 1
+    }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+}

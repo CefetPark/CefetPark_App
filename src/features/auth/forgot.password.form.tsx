@@ -31,14 +31,14 @@ export const ForgotPasswordForm = () => {
 
       <Button
         rounded={12}
-        h={12}
+        h={'8%'}
+        onPress={() => handleSubmit()}
         variant={'solid'}
         backgroundColor={'primary'}
-        onPress={() => handleSubmit()}
-        size={'lg'}
+        _text={{ color: 'secondary', fontSize: 'md' }}
       >
         <Text fontSize={'lg'} color={'textDark'}>
-          Entrar
+          Enviar
         </Text>
       </Button>
     </VStack>

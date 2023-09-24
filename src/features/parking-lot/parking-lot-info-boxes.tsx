@@ -7,10 +7,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const ParkingInfoList = () => {
   const { parkingLotStore } = useStore();
   const occupiedSpots =
-    parkingLotStore.currentParkingLot.totalParkingSpots -
-    parkingLotStore.currentParkingLot.freeSpots;
+    parkingLotStore.currentParkingLot?.totalParkingSpots -
+    parkingLotStore.currentParkingLot?.freeSpots;
   const occupiedPercentage =
-    (occupiedSpots / parkingLotStore.currentParkingLot.totalParkingSpots) * 100;
+    (occupiedSpots / parkingLotStore.currentParkingLot?.totalParkingSpots) * 100;
   const progressColor =
     occupiedPercentage < 40 ? 'success' : occupiedPercentage < 80 ? 'warning' : 'danger';
   return (
@@ -31,7 +31,7 @@ const ParkingInfoList = () => {
               Vagas disponíveis:
             </Text>
             <Text fontWeight={700} fontSize={40}>
-              {parkingLotStore.currentParkingLot.freeSpots}
+              {parkingLotStore.currentParkingLot?.freeSpots}
             </Text>
           </VStack>
         </Box>
