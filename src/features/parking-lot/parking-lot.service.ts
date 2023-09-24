@@ -10,7 +10,11 @@ export class ParkingLotService {
     constructor() { }
 
     async getParkingLots() {
-        return await this.httpService.getList('', authStore.getToken(), ParkingLotModel,)
+        return await this.httpService.getList('', authStore.getToken(), ParkingLotModel)
+    }
+
+    async getCurrentParkingLot(id: string) {
+        return await this.httpService.get(`/${id}`, authStore.getToken(), ParkingLotModel)
     }
 
 }

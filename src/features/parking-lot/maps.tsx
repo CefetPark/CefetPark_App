@@ -14,7 +14,7 @@ export const Maps = () => {
         borderRadius: 12,
       }}
     >
-      <MapView
+      {parkingLotStore.currentParkingLot && <MapView
         minZoomLevel={12}
         initialRegion={{
           latitude: parseFloat(parkingLotStore.currentParkingLot?.address?.latitude),
@@ -32,9 +32,9 @@ export const Maps = () => {
             latitude: parseFloat(parkingLotStore.currentParkingLot?.address?.latitude),
             longitude: parseFloat(parkingLotStore.currentParkingLot?.address?.longitude),
           }}
-          title={parkingLotStore.currentParkingLot.name}
+          title={parkingLotStore.currentParkingLot?.name}
         />
-      </MapView>
+      </MapView>}
     </Box>
   );
 };

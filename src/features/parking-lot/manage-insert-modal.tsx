@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import { DataForm } from './parking-lot-form';
 import QrCodeHandle from './qr-code-handle';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   dataForm: DataForm;
@@ -12,6 +13,7 @@ interface Props {
 
 const manageInsertModal = (props: Props) => {
   const { setDataForm, dataForm } = props;
+  const navigation = useNavigation()
   const [opened, setOpened] = useState<boolean>(true);
   const [qrCodeOpened, setQrCodeOpened] = useState<boolean>(false);
 
@@ -21,6 +23,7 @@ const manageInsertModal = (props: Props) => {
         <Modal.Header>
           {qrCodeOpened ? 'Leitura de QrCode' : 'Seleciona uma opção de inserção'}
         </Modal.Header>
+        <Modal.CloseButton onPress={() => { navigation.goBack() }} />
         <Modal.Body alignItems="center">
           {qrCodeOpened ? (
             <QrCodeHandle

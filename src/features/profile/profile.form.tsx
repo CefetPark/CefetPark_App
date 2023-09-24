@@ -12,6 +12,7 @@ export const ProfileForm = () => {
       <VStack paddingX={5} flex={1} justifyContent={'space-evenly'}>
         <Box alignItems={'center'}>
           <Avatar
+            shadow={3}
             size={'2xl'}
             source={{
               uri: 'https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80',
@@ -28,7 +29,9 @@ export const ProfileForm = () => {
           <Box
             borderRadius={12}
             borderColor={'gray.300'}
+            backgroundColor={'white'}
             borderWidth={1}
+            shadow={3}
             h={'12'}
             paddingLeft={3}
             justifyContent={'center'}
@@ -41,6 +44,8 @@ export const ProfileForm = () => {
           <Box
             borderRadius={12}
             borderColor={'gray.300'}
+            backgroundColor={'white'}
+            shadow={3}
             borderWidth={1}
             h={'12'}
             paddingLeft={3}
@@ -54,6 +59,8 @@ export const ProfileForm = () => {
           <Box
             borderRadius={12}
             borderColor={'gray.300'}
+            backgroundColor={'white'}
+            shadow={3}
             borderWidth={1}
             h={'12'}
             paddingLeft={3}
@@ -63,10 +70,12 @@ export const ProfileForm = () => {
           </Box>
         </Box>
         <Box>
-          <Text>Matricula</Text>
+          <Text >Matricula</Text>
           <Box
             borderRadius={12}
             borderColor={'gray.300'}
+            backgroundColor={'white'}
+            shadow={3}
             borderWidth={1}
             h={'12'}
             paddingLeft={3}
@@ -80,6 +89,8 @@ export const ProfileForm = () => {
           <Box
             borderRadius={12}
             borderColor={'gray.300'}
+            backgroundColor={'white'}
+            shadow={3}
             borderWidth={1}
             h={'12'}
             paddingLeft={3}
@@ -94,6 +105,8 @@ export const ProfileForm = () => {
             <Box
               borderRadius={12}
               borderColor={'gray.300'}
+              backgroundColor={'white'}
+              shadow={3}
               borderWidth={1}
               h={'12'}
               paddingLeft={3}
@@ -109,8 +122,8 @@ export const ProfileForm = () => {
         ) : (
           <></>
         )}
-        <Box paddingX={36}>
-          <Button onPress={() => authStore.logout()} variant={'solid'} bg={'primary'} rounded={12}>
+        <Box paddingX={36} >
+          <Button shadow={3} onPress={() => authStore.logout()} variant={'solid'} bg={'primary'} rounded={12}>
             Sair
           </Button>
         </Box>

@@ -23,6 +23,7 @@ export type RootStackParamList = {
   HomeNav: undefined;
   Profile: undefined;
   ParkingLot: undefined;
+  Queue: undefined;
   QrCode: undefined;
 };
 

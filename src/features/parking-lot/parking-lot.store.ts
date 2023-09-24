@@ -54,6 +54,17 @@ class ParkingLotStore {
       this.handleData = handleData
     })
   }
+
+  @action async reloadCurrentParkingLot(parkingLotId: number) {
+    const parkingLot = await this.parkingLotService.getCurrentParkingLot(parkingLotId.toString())
+    if (parkingLot) {
+      runInAction(() => {
+        if (parkingLot) this.currentParkingLot = parkingLot.data
+      })
+      return true
+    }
+    return false
+  }
 }
 
 export const parkingLotStore = new ParkingLotStore();
