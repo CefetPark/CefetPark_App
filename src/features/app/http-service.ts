@@ -3,7 +3,7 @@ import { ClazzOrModelSchema, deserialize } from 'serializr';
 
 import { Env } from '../../../env';
 
-interface ReqReturn {
+export interface ReqReturn {
   error: { statusError: number; errorMessage: string } | null;
   data: any;
 }

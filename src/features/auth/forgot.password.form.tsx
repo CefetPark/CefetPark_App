@@ -21,6 +21,7 @@ export const ForgotPasswordForm = () => {
             h={'16'}
             size={'lg'}
             onChangeText={(text) => setDataForm({ cpf: text })}
+            maxLength={11}
             rounded={12}
             id="cpf"
             autoCorrect={false}
