@@ -182,7 +182,7 @@ const RemoveScreen = () => {
                                 });
                               }}
                             >
-                              Deletar
+                              Remover
                             </Button>
                           </Button.Group>
                         </AlertDialog.Footer>
@@ -193,7 +193,7 @@ const RemoveScreen = () => {
               </Box>
             )}
           />
-          {}
+          { }
         </Box>
       )}
     </SafeAreaView>

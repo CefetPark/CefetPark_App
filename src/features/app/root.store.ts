@@ -1,9 +1,10 @@
-import { userStore } from './../users/users.store';
-import { registerStore } from './../register/register.store';
-import { carsStore } from './../cars/cars.store';
-import { authStore } from './../auth/auth.store';
-import { parkingLotStore } from './../parking-lot/parking-lot.store';
+import { authStore } from '@features/auth/auth.store';
+import { carsStore } from '@features/cars/cars.store';
+import { parkingLotStore } from '@features/parking-lot';
 import { pusherConnectionStore } from '@features/pusher/pusher-connection';
+import { queueStore } from '@features/queue/queue.store';
+import { registerStore } from '@features/register/register.store';
+import { userStore } from '@features/users/users.store';
 
 class RootStore {
   parkingLotStore = parkingLotStore;
@@ -12,6 +13,7 @@ class RootStore {
   registerStore = registerStore;
   userStore = userStore;
   pusherConnectionStore = pusherConnectionStore;
+  queueStore = queueStore
 }
 
 export const rootStore = new RootStore();

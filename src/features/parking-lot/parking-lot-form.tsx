@@ -82,6 +82,7 @@ const ParkingLotForm = () => {
       setMode(Platform.OS === 'ios' ? 'datetime' : 'date');
     }
   };
+
   const showMode = (currentMode: 'datetime' | 'date') => {
     setShow(true);
     setMode(currentMode);
@@ -118,6 +119,7 @@ const ParkingLotForm = () => {
         placement: 'top',
       });
       parkingLotStore.loadParkingLots();
+      navigate.goBack()
     }
   };
 

@@ -1,13 +1,21 @@
-import { Avatar, Box, Center, FlatList, HStack, Text, VStack } from 'native-base';
-import React from 'react';
+/* import { Avatar, Box, Center, FlatList, HStack, Text, VStack } from 'native-base';
+import React, { useEffect } from 'react';
+import { QueueModel } from './queue.model';
+import useStore from '@features/app/use-store';
 
 const Queue = ({ id }: { id: number }) => {
-    const users: any[] = []
+    const { queueStore } = useStore()
+
+
+
+    useEffect(() => {
+        queueStore.getTheQueue(id)
+    }, [])
 
     return (
         <>
-            {users.length > 0 ? <FlatList
-                data={users}
+            {queueStore.queue.members.length > 0 ? <FlatList
+                data={queueStore.queue.members}
                 renderItem={({ item }) => (
                     <Box
                         borderBottomWidth="1"
@@ -18,7 +26,7 @@ const Queue = ({ id }: { id: number }) => {
                         pl={['0', '4']}
                         pr={['0', '5']}
                         py="2"
-                        id={item.id.toString()}
+                        id={item.id}
                     >
                         <HStack space={[2, 3]} justifyContent="space-between">
                             <Avatar
@@ -54,4 +62,4 @@ const Queue = ({ id }: { id: number }) => {
     );
 }
 
-export default Queue
+export default Queue */
