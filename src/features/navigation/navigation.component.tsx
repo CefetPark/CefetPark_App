@@ -89,7 +89,7 @@ const SecurityNavigator = () => {
       <HomeStack.Screen
         name="ParkingDetails"
         component={ParkingManage}
-        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: true }}
       />
       <HomeStack.Screen
         name="ParkingForm"
@@ -158,7 +158,7 @@ const BottomDriverNavigator = () => {
         }}
       />
 
-      <BottomStack.Screen
+      {/* <BottomStack.Screen
         name="Queue"
         component={QueueScreen}
         options={{
@@ -173,7 +173,7 @@ const BottomDriverNavigator = () => {
             height: 80,
           },
         }}
-      />
+      /> */}
     </BottomStack.Navigator>
   );
 };
