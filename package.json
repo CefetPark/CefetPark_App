@@ -1,12 +1,12 @@
 {
   "name": "cefet-front-app",
-  "version": "1.0.0",
+  "version": "0.1v",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "npx expo start -c",
     "postinstall": "patch-package",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "build": "expo build",
     "tsc": "tsc"
   },
@@ -20,13 +20,13 @@
     "@types/node": "^20.5.7",
     "@types/react-dom": "~18.0.10",
     "axios": "^1.5.0",
-    "dayjs": "^1.11.9",
     "expo": "^49.0.8",
     "expo-barcode-scanner": "~12.5.3",
     "expo-build-properties": "~0.8.3",
     "expo-font": "~11.4.0",
+    "expo-local-authentication": "~13.4.1",
     "expo-status-bar": "~1.6.0",
-    "expo-updates": "~0.18.14",
+    "expo-updates": "~0.18.16",
     "mobx": "^6.10.1",
     "mobx-react-lite": "^4.0.4",
     "moment": "^2.29.4",
@@ -45,7 +45,8 @@
     "react-native-svg": "13.9.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.0",
-    "serializr": "^3.0.2"
+    "serializr": "^3.0.2",
+    "expo-splash-screen": "~0.20.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

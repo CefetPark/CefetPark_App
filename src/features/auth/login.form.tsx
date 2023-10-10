@@ -41,54 +41,48 @@ export const LoginForm = () => {
   };
 
   return (
-    <VStack space={10} w={'100%'}>
-      <VStack space={4}>
-        <>
-          <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
-          <Input
-            h={'16'}
-            size={'lg'}
-            rounded={12}
-            id="cpf"
-            onChangeText={(cpf) => {
-              setFormData({ ...formData, login: cpf });
-            }}
-            maxLength={11}
-            autoCapitalize="none"
-            placeholder="Digite o seu cpf"
-            keyboardType="number-pad"
-          />
-        </>
-        <>
-          <FormControl.Label htmlFor="senha">Senha</FormControl.Label>
-          <Input
-            h={'16'}
-            size={'lg'}
-            rounded={12}
-            id="password"
-            onChangeText={(password) => {
-              setFormData({ ...formData, senha: password });
-            }}
-            maxLength={20}
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={25} mr="3" />
-              </Pressable>
-            }
-            type={show ? "text" : "password"}
-            autoCapitalize="none"
-            placeholder="Digite sua senha"
-          />
-        </>
-      </VStack>
-
+    <VStack space={4} h={'100%'} w={'100%'}>
+      <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
+      <Input
+        h={'10%'}
+        size={'lg'}
+        rounded={12}
+        id="cpf"
+        onChangeText={(cpf) => {
+          setFormData({ ...formData, login: cpf });
+        }}
+        maxLength={11}
+        autoCapitalize="none"
+        placeholder="Digite o seu cpf"
+        keyboardType="number-pad"
+      />
+      <FormControl.Label htmlFor="senha">Senha</FormControl.Label>
+      <Input
+        h={'10%'}
+        size={'lg'}
+        rounded={12}
+        id="password"
+        onChangeText={(password) => {
+          setFormData({ ...formData, senha: password });
+        }}
+        maxLength={20}
+        InputRightElement={
+          <Pressable onPress={() => setShow(!show)}>
+            <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={25} mr="3" />
+          </Pressable>
+        }
+        type={show ? "text" : "password"}
+        autoCapitalize="none"
+        placeholder="Digite sua senha"
+      />
       <Button
         rounded={12}
-        h={'16%'}
+        mt={'5%'}
+        h={'10%'}
         onPress={() => handleSubmit()}
         variant={'solid'}
         backgroundColor={'primary'}
-        _text={{ color: 'secondary', fontSize: 'md' }}
+        _text={{ color: 'secondary', fontSize: 'sm' }}
         isLoading={loading}
       >
         {loading ? <Spinner size="sm" color="secondary" /> : 'Entrar'}

@@ -19,7 +19,8 @@
       "@navigation/*": ["./src/features/navigation/index.tsx"],
       "@screens/*": ["./src/screens/*"],
       "@features/*": ["./src/features/*"],
-      "@types": ["./types.ts"]
+      "@types": ["./types.ts"],
+      "@base/*": ["./*"]
     },
     "moduleResolution": "node",
     "resolveJsonModule": true,
