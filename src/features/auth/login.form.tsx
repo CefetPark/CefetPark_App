@@ -1,5 +1,5 @@
 import useStore from '@features/app/use-store';
-import { Button, FormControl, Icon, Input, Spinner, useToast, VStack } from 'native-base';
+import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useToast, VStack } from 'native-base';
 import React, { useState } from 'react';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Keyboard } from 'react-native';
@@ -9,7 +9,7 @@ export interface LoginFormData {
   senha: string;
 }
 
-export const LoginForm = () => {
+export const LoginForm = ({ isAutenticated }: any) => {
   const toast = useToast();
   const [formData, setFormData] = useState<LoginFormData>({ login: '', senha: '' });
   const [show, setShow] = useState<boolean>(false)
@@ -41,9 +41,10 @@ export const LoginForm = () => {
   };
 
   return (
-    <VStack space={4} h={'100%'} w={'100%'}>
+    <VStack space={2} h={'100%'} w={'100%'}>
       <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
       <Input
+        onPressIn={isAutenticated}
         h={'10%'}
         size={'lg'}
         rounded={12}
@@ -75,6 +76,10 @@ export const LoginForm = () => {
         autoCapitalize="none"
         placeholder="Digite sua senha"
       />
+      <HStack alignItems="center" space={3}>
+        <Switch defaultIsChecked={authStore.keepLoggedIn} onValueChange={() => { authStore.changeKeepLoggedInState() }} size="sm" />
+        <Text>Mantenha-me logado</Text>
+      </HStack>
       <Button
         rounded={12}
         mt={'5%'}

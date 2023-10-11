@@ -11,20 +11,24 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-community/netinfo": "9.3.10",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
+    "@types/base-64": "^1.0.0",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.7",
     "@types/react-dom": "~18.0.10",
     "axios": "^1.5.0",
+    "base-64": "^1.0.0",
     "expo": "^49.0.8",
     "expo-barcode-scanner": "~12.5.3",
     "expo-build-properties": "~0.8.3",
     "expo-font": "~11.4.0",
     "expo-local-authentication": "~13.4.1",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.16",
     "mobx": "^6.10.1",
@@ -45,8 +49,7 @@
     "react-native-svg": "13.9.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.0",
-    "serializr": "^3.0.2",
-    "expo-splash-screen": "~0.20.5"
+    "serializr": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

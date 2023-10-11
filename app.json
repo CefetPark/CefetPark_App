@@ -17,6 +17,9 @@
     "ios": {
       "supportsTablet": false
     },
+    "infoPlist": {
+      "NSFaceIDUsageDescription": "É necessário utilizar o FaceID para validar o usuário."
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
