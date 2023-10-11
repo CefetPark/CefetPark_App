@@ -1,5 +1,5 @@
 import useStore from '@features/app/use-store';
-import { Button, FormControl, Icon, Input, Spinner, useToast, VStack } from 'native-base';
+import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useToast, VStack } from 'native-base';
 import React, { useState } from 'react';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Keyboard } from 'react-native';
@@ -9,7 +9,7 @@ export interface LoginFormData {
   senha: string;
 }
 
-export const LoginForm = () => {
+export const LoginForm = ({ isAutenticated }: any) => {
   const toast = useToast();
   const [formData, setFormData] = useState<LoginFormData>({ login: '', senha: '' });
   const [show, setShow] = useState<boolean>(false)
@@ -41,54 +41,53 @@ export const LoginForm = () => {
   };
 
   return (
-    <VStack space={10} w={'100%'}>
-      <VStack space={4}>
-        <>
-          <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
-          <Input
-            h={'16'}
-            size={'lg'}
-            rounded={12}
-            id="cpf"
-            onChangeText={(cpf) => {
-              setFormData({ ...formData, login: cpf });
-            }}
-            maxLength={11}
-            autoCapitalize="none"
-            placeholder="Digite o seu cpf"
-            keyboardType="number-pad"
-          />
-        </>
-        <>
-          <FormControl.Label htmlFor="senha">Senha</FormControl.Label>
-          <Input
-            h={'16'}
-            size={'lg'}
-            rounded={12}
-            id="password"
-            onChangeText={(password) => {
-              setFormData({ ...formData, senha: password });
-            }}
-            maxLength={20}
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={25} mr="3" />
-              </Pressable>
-            }
-            type={show ? "text" : "password"}
-            autoCapitalize="none"
-            placeholder="Digite sua senha"
-          />
-        </>
-      </VStack>
-
+    <VStack space={2} h={'100%'} w={'100%'}>
+      <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
+      <Input
+        onPressIn={isAutenticated}
+        h={'10%'}
+        size={'lg'}
+        rounded={12}
+        id="cpf"
+        onChangeText={(cpf) => {
+          setFormData({ ...formData, login: cpf });
+        }}
+        maxLength={11}
+        autoCapitalize="none"
+        placeholder="Digite o seu cpf"
+        keyboardType="number-pad"
+      />
+      <FormControl.Label htmlFor="senha">Senha</FormControl.Label>
+      <Input
+        h={'10%'}
+        size={'lg'}
+        rounded={12}
+        id="password"
+        onChangeText={(password) => {
+          setFormData({ ...formData, senha: password });
+        }}
+        maxLength={20}
+        InputRightElement={
+          <Pressable onPress={() => setShow(!show)}>
+            <Icon as={<MaterialIcons name={show ? "visibility" : "visibility-off"} />} size={25} mr="3" />
+          </Pressable>
+        }
+        type={show ? "text" : "password"}
+        autoCapitalize="none"
+        placeholder="Digite sua senha"
+      />
+      <HStack alignItems="center" space={3}>
+        <Switch defaultIsChecked={authStore.keepLoggedIn} onValueChange={() => { authStore.changeKeepLoggedInState() }} size="sm" />
+        <Text>Mantenha-me logado</Text>
+      </HStack>
       <Button
         rounded={12}
-        h={'16%'}
+        mt={'5%'}
+        h={'10%'}
         onPress={() => handleSubmit()}
         variant={'solid'}
         backgroundColor={'primary'}
-        _text={{ color: 'secondary', fontSize: 'md' }}
+        _text={{ color: 'secondary', fontSize: 'sm' }}
         isLoading={loading}
       >
         {loading ? <Spinner size="sm" color="secondary" /> : 'Entrar'}

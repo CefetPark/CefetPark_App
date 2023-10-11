@@ -20,9 +20,9 @@ const ParkingManage = () => {
   }, [])
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <VStack flex={1} space={5} justifyContent={'center'}>
-        {loading ?
-          <>
+      {loading ?
+        <>
+          <VStack flex={1} justifyContent={'center'}>
             <Center w="100%" flex={1}>
               <VStack flex={1} w="95%" space={5} overflow="hidden" justifyContent={'center'}>
                 <VStack space={5} h={'40%'} justifyContent={'center'}>
@@ -38,18 +38,16 @@ const ParkingManage = () => {
                 </VStack>
               </VStack>
             </Center>
-          </>
-          :
-          <>
-            <Box paddingX={2}>
-              <ParkingInfoList />
-            </Box>
-            <Box paddingX={2} alignContent={'center'} justifyContent={'center'}>
-              <ParkingLotManage />
-            </Box>
-          </>
-        }
-      </VStack>
+          </VStack>
+        </>
+        :
+        <>
+          <VStack space={5} height={'100%'} justifyContent={'center'} paddingX={2}>
+            <ParkingInfoList />
+            <ParkingLotManage />
+          </VStack>
+        </>
+      }
     </SafeAreaView>
   );
 };

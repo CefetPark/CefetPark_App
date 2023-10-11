@@ -1,22 +1,25 @@
-import { Image } from 'native-base';
+import { Image, View } from 'native-base';
 import React from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ForgotPasswordForm } from '../features/auth/forgot.password.form';
 
 const ForgotPassword = () => {
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 50, padding: 20, alignItems: 'center' }}>
-      <View>
-        <Image
-          resizeMode="contain"
-          source={require('@assets/logo.png')}
-          alt="Alternate Text"
-          h={'56'}
-        />
-      </View>
-      <ForgotPasswordForm />
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView style={{ height: '80%', width: '90%', alignSelf: 'center' }} behavior='position'>
+        <View w={'100%'} height={'100%'} alignItems={'center'} justifyContent={'center'}>
+          <View height={'85%'} alignSelf={'center'} w={'100%'} alignItems={'center'} justifyContent={'space-around'}>
+            <Image
+              resizeMode="contain"
+              source={require('@assets/logo.png')}
+              alt="Alternate Text"
+            />
+            <ForgotPasswordForm />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

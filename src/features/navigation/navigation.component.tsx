@@ -120,7 +120,7 @@ const BottomDriverNavigator = () => {
           tabBarStyle: {
             borderTopLeftRadius: 40,
             borderTopEndRadius: 40,
-            height: 80,
+            height: '9%',
           },
         }}
       />
@@ -136,7 +136,7 @@ const BottomDriverNavigator = () => {
           tabBarStyle: {
             borderTopLeftRadius: 40,
             borderTopEndRadius: 40,
-            height: 80,
+            height: '9%',
           },
         }}
       />
@@ -153,7 +153,7 @@ const BottomDriverNavigator = () => {
           tabBarStyle: {
             borderTopLeftRadius: 40,
             borderTopEndRadius: 40,
-            height: 80,
+            height: '9%',
           },
         }}
       />
@@ -193,7 +193,7 @@ const BottomSecurityNavigator = () => {
           tabBarStyle: {
             borderTopLeftRadius: 40,
             borderTopEndRadius: 40,
-            height: 80,
+            height: '9%',
           },
         }}
       />
@@ -209,7 +209,7 @@ const BottomSecurityNavigator = () => {
           tabBarStyle: {
             borderTopLeftRadius: 40,
             borderTopEndRadius: 40,
-            height: 80,
+            height: '9%',
           },
         }}
       />
