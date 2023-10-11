@@ -13,7 +13,8 @@ module.exports = function (api) {
             '@navigation': './src/features/navigation/index.tsx',
             '@screens': './src/screens',
             '@features': './src/features',
-            '@types': './types'
+            '@types': './types',
+            '@base': './',
           },
           extensions: ['.ts', '.tsx'],
         },

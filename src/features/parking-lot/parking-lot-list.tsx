@@ -48,23 +48,24 @@ const ParkingList = () => {
                   parkingLotStore.setCurrentParkingLot(parkingLot.id)
                   navigation.navigate('ParkingDetails' as never);
                 }}
+                h={'14%'}
+                mb={'5%'}
               >
                 <HStack
                   flexDir={'row'}
                   justifyContent={'space-evenly'}
-                  h={'24'}
                   paddingX={5}
                   alignSelf={'center'}
                   rounded={'md'}
                   backgroundColor={'light.50'}
                   shadow={'5'}
-                  mb={'5%'}
+                  h={'100%'}
                 >
                   <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
                     <Image
                       resizeMode="contain"
                       source={require('@assets/iconParking.png')}
-                      size={'sm'}
+                      size={'100%'}
                       alt="Simbolo de um estacionamento em ingles"
                     />
                   </Box>
@@ -76,7 +77,7 @@ const ParkingList = () => {
 
                   <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
                     <CircleIcon
-                      size="3"
+                      size="18%"
                       mt="0.5"
                       color={getColorByOccupancy(parkingLot)}
                     />
