@@ -1,6 +1,6 @@
 import { Service } from '@features/app/http-service';
 import { authStore } from '@features/auth/auth.store';
-import { CarToRemove } from '@screens/parking-remove-screen';
+import { CarToRemove } from '@screens/parking-removal-screen';
 
 import { RegisterModel } from './register.model';
 import { EntryRegister } from './register.store';

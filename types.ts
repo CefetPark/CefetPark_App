@@ -17,6 +17,7 @@ export type HomeStackParamList = {
   ParkingManage: undefined;
   ParkingForm: undefined;
   ParkingRemove: undefined;
+  Guest: undefined;
 };
 
 export type RootStackParamList = {

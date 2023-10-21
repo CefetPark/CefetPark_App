@@ -1,6 +1,7 @@
 import useStore from '@features/app/use-store';
 import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
 import ParkingLotManage from '@features/parking-lot/parking-lot-manage';
+import QrCodeHandle from '@features/ui/qr-code-handle';
 import { observer } from 'mobx-react-lite';
 import { Box, Center, HStack, Skeleton, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ParkingManage = () => {
   const { parkingLotStore } = useStore();
-  const [loading, setLoading] = useState<Boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [opened, setOpened] = useState<boolean>(false)
 
   useEffect(() => {
     const reload = async () => {
@@ -42,9 +44,10 @@ const ParkingManage = () => {
         </>
         :
         <>
-          <VStack space={5} height={'100%'} justifyContent={'center'} paddingX={2}>
+          <VStack height={'100%'} justifyContent={'center'} paddingX={2}>
+            <QrCodeHandle opened={opened} setOpened={setOpened} />
             <ParkingInfoList />
-            <ParkingLotManage />
+            <ParkingLotManage setOpened={setOpened} />
           </VStack>
         </>
       }

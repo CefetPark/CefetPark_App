@@ -1,5 +1,5 @@
 import useStore from '@features/app/use-store';
-import { Maps } from '@features/parking-lot/maps';
+import { Maps } from '@features/ui/maps';
 import { Chart } from '@features/parking-lot/parking-lot-chart';
 import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
 import { Box, Center, HStack, Skeleton, VStack } from 'native-base';

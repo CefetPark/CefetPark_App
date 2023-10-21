@@ -1,4 +1,4 @@
-import { CarToRemove } from '@screens/parking-remove-screen';
+import { CarToRemove } from '@screens/parking-removal-screen';
 import { action, makeAutoObservable } from 'mobx';
 
 import { RegisterService } from './register.service';
@@ -8,6 +8,8 @@ export interface EntryRegister {
     parkingLotId: number;
     userId: number;
     carId: number;
+    driverName: string;
+    plate: string;
 }
 
 class RegisterStore {
