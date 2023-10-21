@@ -16,9 +16,11 @@ import {
   Spinner,
   Text,
   useToast,
+  View,
   VStack,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export interface CarToRemove {
@@ -31,9 +33,10 @@ const RemoveScreen = () => {
   const toast = useToast();
   const [cars, setCars] = useState<RegisterModel[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [car, setCar] = useState({ id: 0, plate: '' });
   const onClose = () => setIsOpen(false);
-  const cancelRef = React.useRef(null);
+  const cancelRef = useRef(null);
 
   const getCars = async () => {
     setLoading(true);
@@ -56,6 +59,11 @@ const RemoveScreen = () => {
     getCars();
   }, []);
 
+  const preparToDelete = (id: number, plate: string) => {
+    setIsOpen(!isOpen)
+    setCar({ id, plate })
+  }
+
   const deleteCar = async (data: CarToRemove) => {
     onClose();
     const req = await registerStore.removeCar(data);
@@ -74,30 +82,29 @@ const RemoveScreen = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       {loading ? (
-        <React.Fragment>
+        <VStack flex={1} justifyContent={'center'} alignItems={'center'}>
+          <HStack space={2} justifyContent="center">
+            <Spinner accessibilityLabel="Loading posts" />
+            <Heading fontSize="md">Carregando...</Heading>
+          </HStack>
           <Skeleton
             flexDir={'row'}
             justifyContent={'space-evenly'}
-            h={'20'}
-            w={'85%'}
+            h={'80%'}
+            w={'95%'}
             alignSelf={'center'}
             rounded={'md'}
             backgroundColor={'gray.300'}
             shadow={'5'}
           />
-          <Spacer />
-          <HStack space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
-            <Heading fontSize="md">Carregando...</Heading>
-          </HStack>
-        </React.Fragment>
+        </VStack>
       ) : (
-        <Box marginTop={'10%'} paddingX={5}>
-          <Heading fontSize="xl" p="4" pb="3">
-            <Text>{cars.length > 0 ? 'Estacionados' : 'Não há carros disponíveis'}</Text>
-          </Heading>
+        <VStack paddingX={5} space={'2%'} paddingY={'5%'}>
+          <View w={'100%'}>
+            <Text fontWeight={'500'} fontSize={responsiveFontSize(3)} alignSelf={'center'}>{cars.length > 0 ? 'Estacionados' : 'Não há carros disponíveis'}</Text>
+          </View>
           <FlatList
             data={cars}
             renderItem={({ item }) => (
@@ -150,53 +157,53 @@ const RemoveScreen = () => {
                   </Text>
                   <Spacer />
                   <Center>
-                    <Button bg={'danger'} variant={'solid'} onPress={() => setIsOpen(!isOpen)}>
+                    <Button bg={'danger'} variant={'solid'} onPress={() => preparToDelete(item.id, item.car.plate)}>
                       Remover carro
                     </Button>
-                    <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
-                      <AlertDialog.Content>
-                        <AlertDialog.CloseButton />
-                        <AlertDialog.Header>Remover carro</AlertDialog.Header>
-                        <AlertDialog.Body>
-                          <Text>
-                            Realmente deseja remover o carro esse carro de placa {item.car.plate}?
-                          </Text>
-                        </AlertDialog.Body>
-                        <AlertDialog.Footer>
-                          <Button.Group space={2}>
-                            <Button
-                              variant="unstyled"
-                              colorScheme="coolGray"
-                              onPress={onClose}
-                              ref={cancelRef}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              bg={'danger'}
-                              variant={'solid'}
-                              onPress={() => {
-                                deleteCar({
-                                  id: item.id,
-                                  dataSaida: moment.tz('America/Sao_Paulo').toDate(),
-                                });
-                              }}
-                            >
-                              Remover
-                            </Button>
-                          </Button.Group>
-                        </AlertDialog.Footer>
-                      </AlertDialog.Content>
-                    </AlertDialog>
                   </Center>
                 </HStack>
               </Box>
             )}
           />
-          { }
-        </Box>
-      )}
-    </SafeAreaView>
+          <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
+            <AlertDialog.Content>
+              <AlertDialog.CloseButton />
+              <AlertDialog.Header>Remover carro</AlertDialog.Header>
+              <AlertDialog.Body>
+                <Text>
+                  Realmente deseja remover o carro esse carro de placa {car.plate}?
+                </Text>
+              </AlertDialog.Body>
+              <AlertDialog.Footer>
+                <Button.Group space={2}>
+                  <Button
+                    variant="unstyled"
+                    colorScheme="coolGray"
+                    onPress={onClose}
+                    ref={cancelRef}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    bg={'danger'}
+                    variant={'solid'}
+                    onPress={() => {
+                      deleteCar({
+                        id: car.id,
+                        dataSaida: moment.tz('America/Sao_Paulo').toDate(),
+                      });
+                    }}
+                  >
+                    Remover
+                  </Button>
+                </Button.Group>
+              </AlertDialog.Footer>
+            </AlertDialog.Content>
+          </AlertDialog>
+        </VStack>
+      )
+      }
+    </SafeAreaView >
   );
 };
 

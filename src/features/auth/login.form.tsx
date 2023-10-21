@@ -3,6 +3,7 @@ import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useToa
 import React, { useState } from 'react';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Keyboard } from 'react-native';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 export interface LoginFormData {
   login: string;
@@ -45,7 +46,7 @@ export const LoginForm = ({ isAutenticated }: any) => {
       <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
       <Input
         onPressIn={isAutenticated}
-        h={'10%'}
+        h={responsiveHeight(8)}
         size={'lg'}
         rounded={12}
         id="cpf"
@@ -59,7 +60,7 @@ export const LoginForm = ({ isAutenticated }: any) => {
       />
       <FormControl.Label htmlFor="senha">Senha</FormControl.Label>
       <Input
-        h={'10%'}
+        h={responsiveHeight(8)}
         size={'lg'}
         rounded={12}
         id="password"
@@ -83,7 +84,7 @@ export const LoginForm = ({ isAutenticated }: any) => {
       <Button
         rounded={12}
         mt={'5%'}
-        h={'10%'}
+        h={responsiveHeight(7)}
         onPress={() => handleSubmit()}
         variant={'solid'}
         backgroundColor={'primary'}

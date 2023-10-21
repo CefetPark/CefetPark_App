@@ -3,12 +3,13 @@ import { action, makeAutoObservable, observable, reaction, runInAction } from 'm
 
 import { ParkingLotModel } from './parking-lot.model';
 import { ParkingLotService } from './parking-lot.service';
-
+import { EntryRegister } from '@features/register/register.store';
 class ParkingLotStore {
   @observable isLoading: boolean = false
   @observable parkingLots: ParkingLotModel[] = [];
   @observable currentParkingLot!: ParkingLotModel
-  @observable handleData: { type: 'car' | 'user' | 'default', data: any } = { type: 'default', data: null }
+  @observable formatedData: EntryRegister = { carId: 0, parkingLotId: 0, date: new Date(), userId: 0, driverName: '', plate: '' }
+  @observable unformatedData: { type: 'car' | 'user' | 'default', data: any } = { type: 'default', data: null }
   private parkingLotService = new ParkingLotService()
 
   constructor() {
@@ -49,12 +50,6 @@ class ParkingLotStore {
     })
   }
 
-  @action setHandleData(handleData: { type: 'car' | 'user' | 'default', data: any }) {
-    runInAction(() => {
-      this.handleData = handleData
-    })
-  }
-
   @action async reloadCurrentParkingLot(parkingLotId: number) {
     const parkingLot = await this.parkingLotService.getCurrentParkingLot(parkingLotId.toString())
     if (parkingLot) {
@@ -67,6 +62,24 @@ class ParkingLotStore {
       return true
     }
     return false
+  }
+
+  @action setUnformatedData(data: any, type: 'car' | 'user' | 'default') {
+    runInAction(() => {
+      this.unformatedData = { data, type }
+    })
+  }
+
+  @action setFormatedData(data: EntryRegister) {
+    runInAction(() => {
+      this.formatedData = data
+    })
+  }
+
+  @action resetFormatedData() {
+    runInAction(() => {
+      this.formatedData = { carId: 0, parkingLotId: 0, date: new Date(), userId: 0, driverName: '', plate: '' }
+    })
   }
 }
 
