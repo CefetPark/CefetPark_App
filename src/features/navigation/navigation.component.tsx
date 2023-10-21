@@ -3,17 +3,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ForgotPassword from '@screens/forgot-password-screen';
+import Guest from '@screens/guest-form-screen';
 import homeScreen from '@screens/home-screen';
 import Login from '@screens/login-screen';
 import { ParkingDetails } from '@screens/parking-details-screen';
 import ParkingForm from '@screens/parking-form-screen';
 import ParkingManage from '@screens/parking-manage-screen';
-import RemoveScreen from '@screens/parking-remove-screen';
+import RemoveScreen from '@screens/parking-removal-screen';
 import Profile from '@screens/profile-screen';
 import QrCodeScreen from '@screens/qr-code-screen';
-import QueueScreen from '@screens/queue-screen';
 import { HomeStackParamList, LoginTypes, RootStackParamList, StackParamList } from '@types';
 import { observer } from 'mobx-react-lite';
+import { useTheme } from 'native-base';
 import React from 'react';
 
 import { TabBarIcon } from './tabbar-icon';
@@ -79,17 +80,22 @@ const DriverNavigator = () => {
 };
 
 const SecurityNavigator = () => {
+  const { parkingLotStore } = useStore();
+  const { colors } = useTheme()
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="Home"
         component={homeScreen}
-        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+        options={{
+          headerShown: false,
+          statusBarColor: String(colors.primary),
+        }}
       />
       <HomeStack.Screen
         name="ParkingDetails"
         component={ParkingManage}
-        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: true }}
+        options={{ headerTransparent: true, headerTitleAlign: 'center', headerTitle: `${parkingLotStore.currentParkingLot?.name}`, headerBackVisible: true }}
       />
       <HomeStack.Screen
         name="ParkingForm"
@@ -97,9 +103,14 @@ const SecurityNavigator = () => {
         options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
       />
       <HomeStack.Screen
+        name="Guest"
+        component={Guest}
+        options={{ headerTransparent: true, headerTitle: '', headerBackVisible: false }}
+      />
+      <HomeStack.Screen
         name="ParkingRemove"
         component={RemoveScreen}
-        options={{ headerTransparent: true, headerTitle: '' }}
+        options={{ headerTransparent: true, headerTitle: '', headerBackTitleVisible: false }}
       />
     </HomeStack.Navigator>
   );

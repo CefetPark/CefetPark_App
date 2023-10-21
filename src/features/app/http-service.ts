@@ -94,6 +94,7 @@ export class Service {
   ) {
     try {
       const urlFormated = url ? `${this.baseUrl}${url}` : this.baseUrl
+
       const headers: AxiosRequestConfig = authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}
       const response: AxiosResponse = await this.axios.get(urlFormated, headers);
       if (modelSchema) this.data = deserialize<T>(modelSchema, response.data.data);
@@ -109,6 +110,7 @@ export class Service {
         data: this.data,
       };
     } catch (error: any) {
+      console.log(error)
       return {
         error: { statusError: -1, errorMessage: 'Erro ao tentar obter dados' },
         data: null,

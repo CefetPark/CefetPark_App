@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { Button, Center, Modal, VStack } from 'native-base';
 import React, { useState } from 'react';
 
-import { DataForm } from './parking-lot-form';
+import { DataForm } from '../parking-lot/parking-lot-form';
 import QrCodeHandle from './qr-code-handle';
 import { useNavigation } from '@react-navigation/native';
 

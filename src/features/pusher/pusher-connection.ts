@@ -17,7 +17,7 @@ export class PusherConnectionStore {
 
     constructor() {
         makeAutoObservable(this, {}, { autoBind: true })
-        reaction(() => authStore.authToken, this.initPusher)
+        /* reaction(() => authStore.authToken, this.initPusher) */
     }
 
     set connected(state: boolean) {
