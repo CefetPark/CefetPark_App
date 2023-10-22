@@ -14,7 +14,7 @@ class ColorsStore {
         reaction(
             () => authStore.authToken,
             async () => {
-                authStore.authToken && this.getColors()
+                authStore.authToken && authStore.user?.userType == 'Segurança' && this.getColors()
             }
         )
     }

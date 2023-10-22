@@ -14,7 +14,7 @@ class ModelsStore {
         reaction(
             () => authStore.authToken,
             async () => {
-                authStore.authToken && this.getModels()
+                authStore.authToken && authStore.user?.userType == 'Segurança' && this.getModels()
             }
         )
     }
