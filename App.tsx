@@ -1,5 +1,4 @@
 import { rootStore, StoreProvider } from '@features/app';
-import { useFonts } from 'expo-font';
 import { NativeBaseProvider } from 'native-base';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
