@@ -8,11 +8,12 @@ export const Maps = () => {
   return (
     <Box
       overflow="hidden"
-      borderRadius={20}
-      style={{
-        flex: 1,
-        borderRadius: 12,
-      }}
+      borderRadius={12}
+      flex={1}
+      backgroundColor={'white'}
+      shadow={9}
+      borderWidth={1}
+      borderColor={'#CCC'}
     >
       {parkingLotStore.currentParkingLot && <MapView
         minZoomLevel={12}
@@ -24,6 +25,7 @@ export const Maps = () => {
         }}
         style={{
           flex: 1,
+          borderRadius: 12,
         }}
       >
         <Marker
