@@ -1,13 +1,12 @@
 import useStore from '@features/app/use-store';
 import { Chart } from '@features/parking-lot/parking-lot-chart';
-import { Maps } from '@features/ui/maps';
-import { Avatar, Box, Center, HStack, Image, Pressable, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Linking } from 'react-native';
 import GradientBtn from '@features/ui/gradient-btn';
+import { Maps } from '@features/ui/maps';
+import { Avatar, Center, HStack, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Linking } from 'react-native';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const ParkingDetails = () => {
   const { parkingLotStore } = useStore();

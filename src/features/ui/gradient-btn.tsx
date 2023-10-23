@@ -1,6 +1,6 @@
 import React from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { Pressable, Text } from "native-base";
+import { HStack, Pressable, Text } from "native-base";
 import { authStore } from '@features/auth/auth.store';
 
 type GradientBtnProps = {
@@ -19,7 +19,13 @@ type GradientBtnProps = {
 
 const GradientBtn = (props: GradientBtnProps) => {
     return (
-        <Pressable onPress={() => props.callback ? props.callback() : authStore.logout()} h={props.height} rounded={props.radius} overflow={'hidden'} w={'100%'}>
+        <Pressable
+            onPress={() => props.callback ? props.callback() : authStore.logout()}
+            h={props.height}
+            rounded={props.radius}
+            overflow={'hidden'}
+            w={'100%'}
+        >
             <LinearGradient
                 style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}
                 colors={[props.fColor, props.sColor]}
@@ -27,7 +33,7 @@ const GradientBtn = (props: GradientBtnProps) => {
                 {
                     props.condition
                         ? props.component
-                        : <Text color={props.color} fontSize={props.fontSize}>{props.text} {props.iconComponent}</Text>
+                        : <HStack justifyContent={'center'} alignItems={'center'} space={'1%'}><Text color={props.color} fontSize={props.fontSize}>{props.text}</Text>{props.iconComponent}</HStack>
                 }
             </LinearGradient>
         </Pressable>

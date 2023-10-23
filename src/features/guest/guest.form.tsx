@@ -3,12 +3,14 @@ import useStore from '@features/app/use-store';
 import { Colors } from '@features/colors/colors.model';
 import { Models } from '@features/models/models.model';
 import ActionSheetComponent from '@features/ui/actionSheet';
+import GradientBtn from '@features/ui/gradient-btn';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { Button, FormControl, HStack, Input, KeyboardAvoidingView, Spinner, VStack } from 'native-base';
+import { Button, FormControl, HStack, Input, KeyboardAvoidingView, Spinner, VStack, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Keyboard } from 'react-native';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type DataForm = {
@@ -171,18 +173,21 @@ const GuestForm = () => {
                         >
                             Voltar
                         </Button>
-                        <Button
-                            rounded={12}
-                            w={'45%'}
-                            h={responsiveHeight(6.5)}
-                            variant={'solid'}
-                            backgroundColor={'primary'}
-                            onPress={() => onSubmit()}
-                            _text={{ color: 'secondary', fontSize: 'md' }}
-                            isLoading={loading}
-                        >
-                            {loading ? <Spinner size="sm" color="secondary" /> : 'Enviar'}
-                        </Button>
+                        <View w={'45%'}>
+                            <GradientBtn
+                                condition={loading}
+                                callback={onSubmit}
+                                height={responsiveHeight(7)}
+                                iconComponent={<Icon name='arrow-right' size={responsiveFontSize(2)} color={'white'} />}
+                                radius={12}
+                                color='secondary'
+                                fontSize='md'
+                                component={<Spinner size="sm" color="secondary" />}
+                                text={'Enviar'}
+                                fColor='#002c58'
+                                sColor='#004d99'
+                            />
+                        </View>
                     </HStack>
                 </VStack>
             </KeyboardAvoidingView>
