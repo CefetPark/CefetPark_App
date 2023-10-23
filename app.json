@@ -2,12 +2,12 @@
   "expo": {
     "name": "Cefet Park",
     "slug": "cefetpark",
-    "version": "0.1v",
+    "version": "1.0v",
     "orientation": "portrait",
     "icon": "./assets/logoPark.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logoPark.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
