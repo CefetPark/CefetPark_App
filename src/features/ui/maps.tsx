@@ -8,7 +8,6 @@ export const Maps = () => {
   return (
     <Box
       overflow="hidden"
-      borderRadius={12}
       flex={1}
       backgroundColor={'white'}
       shadow={9}
@@ -25,7 +24,6 @@ export const Maps = () => {
         }}
         style={{
           flex: 1,
-          borderRadius: 12,
         }}
       >
         <Marker

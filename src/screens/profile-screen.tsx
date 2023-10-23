@@ -1,4 +1,4 @@
-import { ProfileForm } from '@features/profile';
+import { ProfileForm } from '@features/profile/profile';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
