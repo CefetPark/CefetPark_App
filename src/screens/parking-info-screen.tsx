@@ -1,12 +1,12 @@
 import useStore from '@features/app/use-store';
 import { Chart } from '@features/parking-lot/parking-lot-chart';
+import GradientBtn from '@features/ui/gradient-btn';
 import { Maps } from '@features/ui/maps';
-import { Avatar, Box, Center, HStack, Image, Pressable, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
+import { Avatar, Center, HStack, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Linking } from 'react-native';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const ParkingDetails = () => {
   const { parkingLotStore } = useStore();
@@ -42,7 +42,7 @@ export const ParkingDetails = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <>
       {loading
         ? <Center w="100%" flex={1}>
           <VStack flex={1} w={responsiveWidth(95)} space={5} overflow="hidden" justifyContent={'center'}>
@@ -57,7 +57,7 @@ export const ParkingDetails = () => {
             <Skeleton borderRadius={12} h={'33%'} />
           </VStack>
         </Center>
-        : <ScrollView>
+        : <ScrollView flex={1}>
           <VStack flex={1} space={5} justifyContent={'center'} alignContent={'center'}>
             <View h={responsiveHeight(40)}>
               <Maps />
@@ -79,12 +79,16 @@ export const ParkingDetails = () => {
               }}
             >
               <HStack w={'95%'} justifyContent={'space-between'}>
-                <Pressable onPress={() => openMaps()} background={'primary'} shadow={3} justifyContent={'center'} alignItems={'center'} w={'100%'} rounded={12} h={responsiveHeight(6)}>
-                  <HStack justifyContent={'center'} alignItems={'center'}>
-                    <Text color={'textDark'}>Abrir Maps</Text>
-                    <Icon name='google-maps' size={responsiveFontSize(2)} color={'white'} />
-                  </HStack>
-                </Pressable>
+                <GradientBtn
+                  iconComponent={<Icon name='google-maps' size={responsiveFontSize(2)} color={'white'} />}
+                  callback={openMaps}
+                  color='white'
+                  height={responsiveHeight(6)}
+                  radius={12}
+                  fontSize='md'
+                  text={'Abrir Maps'}
+                  fColor='#002c58'
+                  sColor='#004d99' />
               </HStack>
               <HStack
                 borderColor={"#CCC"}
@@ -129,6 +133,6 @@ export const ParkingDetails = () => {
           </VStack>
         </ScrollView>
       }
-    </SafeAreaView>
+    </>
   );
 };

@@ -1,9 +1,11 @@
 import useStore from '@features/app/use-store';
-import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useToast, VStack } from 'native-base';
+import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useTheme, useToast, View, VStack } from 'native-base';
 import React, { useState } from 'react';
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Keyboard } from 'react-native';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { LinearGradient } from 'expo-linear-gradient';
+import GradientBtn from '@features/ui/gradient-btn';
 
 export interface LoginFormData {
   login: string;
@@ -12,6 +14,7 @@ export interface LoginFormData {
 
 export const LoginForm = ({ isAutenticated }: any) => {
   const toast = useToast();
+  const { colors } = useTheme()
   const [formData, setFormData] = useState<LoginFormData>({ login: '', senha: '' });
   const [show, setShow] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false);
@@ -81,18 +84,22 @@ export const LoginForm = ({ isAutenticated }: any) => {
         <Switch defaultIsChecked={authStore.keepLoggedIn} onValueChange={() => { authStore.changeKeepLoggedInState() }} size="sm" />
         <Text>Mantenha-me logado</Text>
       </HStack>
-      <Button
-        rounded={12}
-        mt={'5%'}
-        h={responsiveHeight(7)}
-        onPress={() => handleSubmit()}
-        variant={'solid'}
-        backgroundColor={'primary'}
-        _text={{ color: 'secondary', fontSize: 'sm' }}
-        isLoading={loading}
-      >
-        {loading ? <Spinner size="sm" color="secondary" /> : 'Entrar'}
-      </Button>
+
+      <View mt={'5%'}>
+        <GradientBtn
+          condition={loading}
+          callback={handleSubmit}
+          height={responsiveHeight(7)}
+          radius={12}
+          color='secondary'
+          fontSize='md'
+          component={<Spinner size="sm" color="secondary" />}
+          text={'Entrar'}
+          fColor='#002c58'
+          sColor='#004d99'
+        />
+      </View>
+
     </VStack>
   );
 };

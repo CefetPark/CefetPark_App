@@ -3,6 +3,7 @@ import { Keyboard } from 'react-native';
 
 import { parkingLotStore } from '@features/parking-lot';
 import { EntryRegister } from '@features/register/register.store';
+import { } from './use-date';
 
 
 const useHandleData = () => {
@@ -13,7 +14,6 @@ const useHandleData = () => {
             setLoading(true);
             Keyboard.dismiss();
             await carsStore.getCarByPlate(text).then(res => {
-                console.log(res)
                 if (res.error) {
                     setError(true)
                     return null
