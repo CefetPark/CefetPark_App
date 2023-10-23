@@ -37,14 +37,14 @@ const ParkingInfoList = () => {
           <CircleIcon
             mt="0.5"
           />
-          <Text fontSize={responsiveFontSize(2)} fontWeight={'600'}>{`${parkingLotStore.currentParkingLot?.freeSpots} vagas livres`}</Text>
+          <Text fontSize={responsiveFontSize(2)} fontWeight={'600'}>{`${parkingLotStore.currentParkingLot?.freeSpots} Vagas Livres`}</Text>
         </HStack>
         <HStack space={'5%'}>
           <CircleIcon
             mt="0.5"
             color={colors[progressColor]}
           />
-          <Text fontSize={responsiveFontSize(2)} fontWeight={'600'}>{`${occupiedSpots} vagas ocupadas`}</Text>
+          <Text fontSize={responsiveFontSize(2)} fontWeight={'600'}>{`${occupiedSpots} Vagas Ocupadas`}</Text>
         </HStack>
       </HStack>
     </VStack>
