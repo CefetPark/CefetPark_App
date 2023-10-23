@@ -5,6 +5,7 @@ import { Avatar, Box, Center, HStack, Image, Pressable, ScrollView, Skeleton, Te
 import React, { useEffect, useState } from 'react';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Linking } from 'react-native';
 
 export const ParkingDetails = () => {
@@ -79,7 +80,10 @@ export const ParkingDetails = () => {
             >
               <HStack w={'95%'} justifyContent={'space-between'}>
                 <Pressable onPress={() => openMaps()} background={'primary'} shadow={3} justifyContent={'center'} alignItems={'center'} w={'100%'} rounded={12} h={responsiveHeight(6)}>
-                  <Text color={'textDark'}>Abrir Maps</Text>
+                  <HStack justifyContent={'center'} alignItems={'center'}>
+                    <Text color={'textDark'}>Abrir Maps</Text>
+                    <Icon name='google-maps' size={responsiveFontSize(2)} color={'white'} />
+                  </HStack>
                 </Pressable>
               </HStack>
               <HStack
@@ -115,7 +119,7 @@ export const ParkingDetails = () => {
                 paddingY={'3%'}
               >
                 <Avatar size={responsiveFontSize(10)} source={require('@assets/estacionados.png')} />
-                <Text fontWeight={'500'} fontSize={responsiveFontSize(2)}>Vagas livres</Text>
+                <Text fontWeight={'500'} fontSize={responsiveFontSize(2)}>Vagas Livres</Text>
                 <Text color={'success'} fontWeight={'bold'} fontSize={responsiveFontSize(3)}>{parkingLotStore.currentParkingLot.freeSpots}</Text>
               </HStack>
               <View>
