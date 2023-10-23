@@ -12,6 +12,7 @@ import {
   Skeleton,
   Spacer,
   Spinner,
+  StatusBar,
   Text,
   View,
   VStack,
@@ -21,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ParkingLotModel } from './parking-lot.model';
 import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ParkingList = () => {
   const { parkingLotStore, authStore } = useStore();
@@ -44,13 +46,16 @@ const ParkingList = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View flex={1}>
-        <VStack paddingY={'2%'} borderBottomRadius={12} h={'35%'} alignSelf={'center'} justifyContent={'space-around'} alignItems={'center'} w={'100%'} paddingX={5} backgroundColor={'primary'}>
-          <VStack w={'100%'}>
-            <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4)} color={'white'}>Olá,</Text>
-            <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4)} color={'white'}>{authStore.user?.name} &#128512;</Text>
+        <StatusBar barStyle={'light-content'} backgroundColor={"#001d3a"} />
+        <LinearGradient colors={['#001d3a', '#004a94']} style={{ height: '35%', borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }}>
+          <VStack flex={1} paddingY={'2%'} alignSelf={'center'} justifyContent={'space-around'} alignItems={'center'} w={'100%'} paddingX={5}>
+            <VStack w={'100%'}>
+              <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4)} color={'white'}>Olá,</Text>
+              <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4)} color={'white'}>{authStore.user?.name} &#128512;</Text>
+            </VStack>
+            <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4.5)} color={'white'}>Estacionamentos</Text>
           </VStack>
-          <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4.5)} color={'white'}>Estacionamentos</Text>
-        </VStack>
+        </LinearGradient>
         <ScrollView flex={1} paddingTop={'5%'}>
           <View>
             {parkingLotStore.parkingLots ? (

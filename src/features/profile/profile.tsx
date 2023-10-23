@@ -1,4 +1,5 @@
 import useStore from '@features/app/use-store';
+import GradientBtn from '@features/ui/gradient-btn';
 import { LoginTypes } from '@types';
 import { Avatar, Box, Button, Text, View, VStack, ScrollView } from 'native-base';
 import React from 'react';
@@ -150,9 +151,15 @@ export const ProfileForm = () => {
         </Box>
       )}
       <Box paddingX={36} mt={'4%'}>
-        <Button h={responsiveHeight(6.5)} shadow={3} onPress={() => authStore.logout()} variant={'solid'} bg={'primary'} rounded={12}>
-          Sair
-        </Button>
+        <GradientBtn
+          height={responsiveHeight(6.5)}
+          radius={12}
+          color='secondary'
+          fontSize='md'
+          text={'Sair'}
+          fColor='#002c58'
+          sColor='#004d99'
+        />
       </Box>
     </ScrollView>
   );

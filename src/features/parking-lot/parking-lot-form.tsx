@@ -2,12 +2,14 @@ import useHandleData from '@base/src/helpers/handle-data';
 import useToast from '@base/src/helpers/use-toast';
 import useStore from '@features/app/use-store';
 import DatetimePicker from '@features/ui/datetime-picker';
+import GradientBtn from '@features/ui/gradient-btn';
 import { HandleDataModal } from '@features/ui/handle-data-modal';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { Button, FormControl, HStack, Input, Spinner, VStack } from 'native-base';
+import { Button, FormControl, HStack, Input, Spinner, View, VStack } from 'native-base';
 import React, { useState } from 'react';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export interface DataForm {
   parkingLotId: number;
@@ -27,7 +29,8 @@ const ParkingLotForm = () => {
   const [error, setError] = useState(false)
 
   const handleSubmit = async () => {
-    await registerStore.sendRegister(parkingLotStore.formatedData).then(res => {
+    const { date } = parkingLotStore.formatedData
+    await registerStore.sendRegister({ ...parkingLotStore.formatedData, date: new Date(date.setHours(date.getHours() - 3)) }).then(res => {
       if (res.error) {
         showToast({
           description: res.error.errorMessage,
@@ -100,18 +103,21 @@ const ParkingLotForm = () => {
           >
             Voltar
           </Button>
-          <Button
-            rounded={12}
-            w={'45%'}
-            h={responsiveHeight(7)}
-            variant={'solid'}
-            backgroundColor={'primary'}
-            onPress={() => handleSubmit()}
-            _text={{ color: 'secondary', fontSize: 'md' }}
-            isLoading={loading}
-          >
-            {loading ? <Spinner size="sm" color="secondary" /> : 'Enviar'}
-          </Button>
+          <View w={'45%'}>
+            <GradientBtn
+              condition={loading}
+              callback={handleSubmit}
+              height={responsiveHeight(7)}
+              radius={12}
+              iconComponent={<Icon name='arrow-right' size={responsiveFontSize(2)} color={'white'} />}
+              color='secondary'
+              fontSize='md'
+              component={<Spinner size="sm" color="secondary" />}
+              text={'Enviar'}
+              fColor='#002c58'
+              sColor='#004d99'
+            />
+          </View>
         </HStack>
       </VStack>
       <HandleDataModal />
