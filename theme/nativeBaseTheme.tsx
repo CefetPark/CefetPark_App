@@ -9,5 +9,7 @@ export const customTheme = extendTheme({
     success: '#12a312',
     textDark: '#fff',
     textLigth: '#9c9c9ccc',
+    gradientI: '#013161',
+    gradientF: '#004183'
   },
 });

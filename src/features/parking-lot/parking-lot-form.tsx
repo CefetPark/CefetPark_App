@@ -27,7 +27,8 @@ const ParkingLotForm = () => {
   const [error, setError] = useState(false)
 
   const handleSubmit = async () => {
-    await registerStore.sendRegister(parkingLotStore.formatedData).then(res => {
+    const { date } = parkingLotStore.formatedData
+    await registerStore.sendRegister({ ...parkingLotStore.formatedData, date: new Date(date.setHours(date.getHours() - 3)) }).then(res => {
       if (res.error) {
         showToast({
           description: res.error.errorMessage,

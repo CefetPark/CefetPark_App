@@ -1,6 +1,5 @@
 import packageJson from '@base/package.json';
 import useStore from '@features/app/use-store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { observer } from 'mobx-react-lite';

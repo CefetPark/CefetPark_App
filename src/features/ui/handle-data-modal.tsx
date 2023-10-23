@@ -1,3 +1,4 @@
+import useDate from '@base/src/helpers/use-date';
 import useStore from '@features/app/use-store';
 import { UserModel } from '@features/auth/auth.model';
 import { CarsModel } from '@features/cars/cars.model';
@@ -11,7 +12,8 @@ export const HandleDataModal = observer(() => {
   const { type, data } = parkingLotStore.unformatedData
 
   const handleSubmit = (data: any) => {
-    const newDataForm: EntryRegister = { carId: 0, date: new Date(), parkingLotId: 0, userId: 0, driverName: '', plate: "" };
+    const { getFormattedDate } = useDate()
+    const newDataForm: EntryRegister = { carId: 0, date: getFormattedDate(), parkingLotId: 0, userId: 0, driverName: '', plate: "" };
 
     if (type === 'car') {
       newDataForm.carId = data.id;

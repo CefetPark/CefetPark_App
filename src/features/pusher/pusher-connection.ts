@@ -61,8 +61,8 @@ export class PusherConnectionStore {
         if (!this._connected) return
         this._channel = this._pusherConnection?.subscribe(`my-channel`)
 
-        this._channel?.bind("pusher:subscription_succeeded", (event: any) => { console.log(event) })
-        this._channel?.bind("pusher:subscription_error", (event: any) => { console.log(event) })
+        this._channel?.bind("pusher:subscription_succeeded", (event: any) => { })
+        this._channel?.bind("pusher:subscription_error", (event: any) => { })
         this._channel?.bind("my-event", (event: any) => { })
     }
 }
