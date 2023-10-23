@@ -8,6 +8,7 @@ import {
   HStack,
   Image,
   Pressable,
+  ScrollView,
   Skeleton,
   Spacer,
   Spinner,
@@ -50,79 +51,81 @@ const ParkingList = () => {
           </VStack>
           <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4.5)} color={'white'}>Estacionamentos</Text>
         </VStack>
-        <Box flex={1} justifyContent={'center'}>
-          {parkingLotStore.parkingLots ? (
-            <Box flex={1} justifyContent={'center'}>
-              {parkingLotStore.parkingLots.map((parkingLot) => (
-                <React.Fragment key={parkingLot.id}>
-                  <Pressable
-                    onPress={() => {
-                      parkingLotStore.setCurrentParkingLot(parkingLot.id)
-                      navigation.navigate('ParkingDetails' as never);
-                    }}
-                    h={responsiveHeight(13)}
-                    mb={'5%'}
-                  >
-                    <HStack
-                      flexDir={'row'}
-                      justifyContent={'space-evenly'}
-                      paddingX={5}
-                      alignSelf={'center'}
-                      borderRadius={12}
-                      backgroundColor={'light.50'}
-                      shadow={'5'}
-                      h={'100%'}
+        <ScrollView flex={1} paddingTop={'5%'}>
+          <View>
+            {parkingLotStore.parkingLots ? (
+              <Box flex={1} justifyContent={'center'}>
+                {parkingLotStore.parkingLots.map((parkingLot) => (
+                  <React.Fragment key={parkingLot.id}>
+                    <Pressable
+                      onPress={() => {
+                        parkingLotStore.setCurrentParkingLot(parkingLot.id)
+                        navigation.navigate('ParkingDetails' as never);
+                      }}
+                      h={responsiveHeight(13)}
+                      mb={'5%'}
                     >
-                      <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
-                        <Image
-                          resizeMode="contain"
-                          source={require('@assets/iconParking.png')}
-                          size={'100%'}
-                          alt="Simbolo de um estacionamento em ingles"
-                        />
-                      </Box>
-                      <Box w={'3/6'} justifyContent={'center'} alignItems={'center'}>
-                        <Text fontSize={responsiveFontSize(2.3)} textAlign={'justify'}>
-                          {parkingLot?.name}
-                        </Text>
-                      </Box>
+                      <HStack
+                        flexDir={'row'}
+                        justifyContent={'space-evenly'}
+                        paddingX={5}
+                        alignSelf={'center'}
+                        borderRadius={12}
+                        backgroundColor={'light.50'}
+                        shadow={'5'}
+                        h={'100%'}
+                      >
+                        <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
+                          <Image
+                            resizeMode="contain"
+                            source={require('@assets/iconParking.png')}
+                            size={'100%'}
+                            alt="Simbolo de um estacionamento em ingles"
+                          />
+                        </Box>
+                        <Box w={'3/6'} justifyContent={'center'} alignItems={'center'}>
+                          <Text fontSize={responsiveFontSize(2.3)} textAlign={'justify'}>
+                            {parkingLot?.name}
+                          </Text>
+                        </Box>
 
-                      <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
-                        <CircleIcon
-                          size="18%"
-                          mt="0.5"
-                          color={getColorByOccupancy(parkingLot)}
-                        />
-                      </Box>
-                    </HStack>
-                  </Pressable>
+                        <Box w={'1/5'} justifyContent={'center'} alignItems={'center'}>
+                          <CircleIcon
+                            size="18%"
+                            mt="0.5"
+                            color={getColorByOccupancy(parkingLot)}
+                          />
+                        </Box>
+                      </HStack>
+                    </Pressable>
+                  </React.Fragment>
+                ))}
+              </Box>
+            ) : (
+              <>
+                <React.Fragment>
+                  <Skeleton
+                    flexDir={'row'}
+                    justifyContent={'space-evenly'}
+                    h={'20'}
+                    w={'85%'}
+                    alignSelf={'center'}
+                    rounded={'md'}
+                    backgroundColor={'gray.300'}
+                    shadow={'5'}
+                  />
+                  <Spacer />
+                  <HStack space={2} justifyContent="center">
+                    <Spinner accessibilityLabel="Loading posts" />
+                    <Heading fontSize="md">Carregando...</Heading>
+                  </HStack>
                 </React.Fragment>
-              ))}
-            </Box>
-          ) : (
-            <>
-              <React.Fragment>
-                <Skeleton
-                  flexDir={'row'}
-                  justifyContent={'space-evenly'}
-                  h={'20'}
-                  w={'85%'}
-                  alignSelf={'center'}
-                  rounded={'md'}
-                  backgroundColor={'gray.300'}
-                  shadow={'5'}
-                />
-                <Spacer />
-                <HStack space={2} justifyContent="center">
-                  <Spinner accessibilityLabel="Loading posts" />
-                  <Heading fontSize="md">Carregando...</Heading>
-                </HStack>
-              </React.Fragment>
-            </>
-          )}
-        </Box>
+              </>
+            )}
+          </View>
+        </ScrollView>
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

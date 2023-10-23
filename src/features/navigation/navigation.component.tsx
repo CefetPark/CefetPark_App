@@ -6,7 +6,7 @@ import ForgotPassword from '@screens/forgot-password-screen';
 import Guest from '@screens/guest-form-screen';
 import homeScreen from '@screens/home-screen';
 import Login from '@screens/login-screen';
-import { ParkingDetails } from '@screens/parking-details-screen';
+import { ParkingDetails } from '@screens/parking-info-screen';
 import ParkingForm from '@screens/parking-form-screen';
 import ParkingManage from '@screens/parking-manage-screen';
 import RemoveScreen from '@screens/parking-removal-screen';
