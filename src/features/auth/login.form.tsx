@@ -12,9 +12,8 @@ export interface LoginFormData {
   senha: string;
 }
 
-export const LoginForm = ({ isAutenticated }: any) => {
+export const LoginForm = () => {
   const toast = useToast();
-  const { colors } = useTheme()
   const [formData, setFormData] = useState<LoginFormData>({ login: '', senha: '' });
   const [show, setShow] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,7 +47,6 @@ export const LoginForm = ({ isAutenticated }: any) => {
     <VStack space={2} h={'100%'} w={'100%'}>
       <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
       <Input
-        onPressIn={isAutenticated}
         h={responsiveHeight(8)}
         size={'lg'}
         rounded={12}

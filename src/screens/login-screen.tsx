@@ -33,26 +33,6 @@ const Login = () => {
     }
   }, [tooltipState])
 
-  const isAutenticated = async () => {
-    if (authStore.keepLoggedIn) {
-      await authStore.getAsyncStorage('login').then((value) => {
-        if (value) {
-          authStore.setIsAutenticated(true)
-          onAuthenticate(JSON.parse(value))
-        }
-      });
-    }
-  }
-
-  const onAuthenticate = async (loginData: LoginFormData) => {
-    await LocalAuthentication.authenticateAsync({
-      promptMessage: 'Autenticação',
-      fallbackLabel: 'Biometria não reconhecida'
-    }).then(result => {
-      if (result.success) authStore.login(loginData)
-    })
-  }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={{ height: '80%', width: '90%', alignSelf: 'center' }} behavior='position'>
@@ -61,9 +41,9 @@ const Login = () => {
             height={'30%'}
             resizeMode="contain"
             source={require('@assets/logo.png')}
-            alt="Alternate Text"
+            alt='Logo cefet'
           />
-          <LoginForm isAutenticated={isAutenticated} />
+          <LoginForm />
         </View>
       </KeyboardAvoidingView>
       <View flex={1} justifyContent={'space-between'} alignItems={'center'}>
