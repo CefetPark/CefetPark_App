@@ -1,7 +1,7 @@
 import useStore from '@features/app/use-store';
 import { observer } from 'mobx-react-lite';
 import { CircleIcon, HStack, Text, useTheme, VStack } from 'native-base';
-import React from 'react';
+import React, { memo } from 'react';
 import { useWindowDimensions } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -51,4 +51,4 @@ const ParkingInfoList = () => {
   );
 };
 
-export default observer(ParkingInfoList);
+export default memo(observer(ParkingInfoList));
