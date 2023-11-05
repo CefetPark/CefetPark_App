@@ -1,5 +1,5 @@
 import useStore from '@features/app/use-store';
-import ParkingInfoList from '@features/parking-lot/parking-lot-info-boxes';
+import ParkingInfoList from '@features/parking-lot/parking-lot-data';
 import ParkingLotManage from '@features/parking-lot/parking-lot-manage';
 import QrCodeHandle from '@features/ui/qr-code-handle';
 import { observer } from 'mobx-react-lite';

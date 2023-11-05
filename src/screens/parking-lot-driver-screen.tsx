@@ -1,7 +1,7 @@
 import useStore from '@features/app/use-store';
 import { Chart } from '@features/parking-lot/parking-lot-chart';
 import GradientBtn from '@features/ui/gradient-btn';
-import { Maps } from '@features/ui/maps';
+import Maps from '@features/ui/maps';
 import { Avatar, Center, HStack, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Linking } from 'react-native';

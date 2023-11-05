@@ -29,6 +29,8 @@ const GradientBtn = (props: GradientBtnProps) => {
             <LinearGradient
                 style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}
                 colors={[props.fColor, props.sColor]}
+                start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
+
             >
                 {
                     props.condition

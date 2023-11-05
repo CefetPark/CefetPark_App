@@ -28,6 +28,7 @@ export class Service {
     try {
       const urlFormated = url ? `${this.baseUrl}${url}` : this.baseUrl
       const headers: AxiosRequestConfig = authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}
+      console.log(headers)
       let response: ReqReturn = { data: null, error: { errorMessage: '', statusError: 0 } }
       await this.axios.post(urlFormated, data, headers)
         .then((res) => {

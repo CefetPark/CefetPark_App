@@ -19,6 +19,9 @@ class AuthStore {
 
     runInAction(async () => {
       this.keepLoggedIn = Boolean(await this.getAsyncStorage('keepLoggedIn'))
+      const user = await authStore.getAsyncStorage('user')
+      const token = await authStore.getAsyncStorage('token')
+      user && token && authStore.setUserAndToken(JSON.parse(user), token.substring(1, token.length - 1))
     })
   }
 
@@ -27,19 +30,23 @@ class AuthStore {
   }
 
   @action async login(loginFormData: LoginFormData) {
-    if (!this.isAutenticated) await this.setAsyncStorage('login', JSON.stringify(loginFormData))
     const req = await this.authService.login(loginFormData);
     if (req.data) {
-      runInAction(() => {
+      runInAction(async () => {
         this.user = req.data.user;
         this.authToken = req.data.token;
+        if (this.keepLoggedIn) {
+          await this.setAsyncStorage('user', JSON.stringify(this.user))
+          await this.setAsyncStorage('token', JSON.stringify(this.authToken))
+        }
       })
     }
     return req
   }
 
   @action logout() {
-    runInAction(() => {
+    AsyncStorage.clear()
+    runInAction(async () => {
       this.authToken = ''
       this.user = null
     })
@@ -72,6 +79,13 @@ class AuthStore {
   @action async getAsyncStorage(key: string) {
     const data = await AsyncStorage.getItem(base64.encode(key))
     return data ? base64.decode(data) : null
+  }
+
+  @action setUserAndToken(user: UserModel, token: string) {
+    runInAction(() => {
+      this.user = user
+      this.authToken = token
+    })
   }
 
 }

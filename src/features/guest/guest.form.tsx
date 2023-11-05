@@ -16,26 +16,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export type DataForm = {
     name: string
     cpf: string
+    sicap: string
     cars: {
         plate: string,
-        colorName: string,
-        colorId: number,
-        modelName: string,
-        modelId: number
     }
 }
 
 const GuestForm = () => {
     const navigate = useNavigation();
     const showToast = useToast()
-    const { colorsStore, guestStore, modelsStore } = useStore()
+    const { guestStore } = useStore()
     const [dataForm, setDataForm] = useState<DataForm>(
-        { name: '', cpf: '', cars: { colorId: 0, colorName: '', modelId: 0, modelName: '', plate: '' } }
+        { name: '', cpf: '', sicap: '', cars: { plate: '' } }
     )
     const [loading, setLoading] = useState<boolean>(false)
-    const [colorActionsheet, setColorActionsheet] = useState<{ data: Colors[], opened: boolean }>({ data: [], opened: false })
-    const [modelActionsheet, setModelActionsheet] = useState<{ data: Models[], opened: boolean }>({ data: [], opened: false })
-
     const onSubmit = async () => {
         setLoading(true)
         const result = await guestStore.sendGuest(dataForm)
@@ -47,46 +41,6 @@ const GuestForm = () => {
         })
         !result.error && navigate.goBack()
         setLoading(false)
-    }
-
-    const filterColors = (text: string) => {
-        if (text.length > 2) {
-            const matchs = colorsStore.colors.filter(cor => cor.name.substring(0, text.length).toLowerCase() == text.toLowerCase())
-            if (matchs.length > 0) {
-                Keyboard.dismiss()
-                setColorActionsheet({ data: matchs, opened: true })
-            }
-        }
-    }
-
-    const selectColor = (color?: Colors) => {
-        if (color) {
-            setDataForm({ ...dataForm, cars: { ...dataForm.cars, colorId: color.id, colorName: color.name } })
-            setColorActionsheet({ data: [], opened: false })
-        } else {
-            setDataForm({ ...dataForm, cars: { ...dataForm.cars, colorId: 0, colorName: '' } })
-            setColorActionsheet({ data: [], opened: false })
-        }
-    }
-
-    const filterModels = (text: string) => {
-        if (text.length > 1) {
-            const matchs = modelsStore.models.filter(models => models.name.substring(0, text.length).toLowerCase() == text.toLowerCase())
-            if (matchs.length > 0) {
-                Keyboard.dismiss()
-                setModelActionsheet({ data: matchs, opened: true })
-            }
-        }
-    }
-
-    const selectModels = (model?: Models) => {
-        if (model) {
-            setDataForm({ ...dataForm, cars: { ...dataForm.cars, modelId: model.id, modelName: model.name } })
-            setModelActionsheet({ data: [], opened: false })
-        } else {
-            setDataForm({ ...dataForm, cars: { ...dataForm.cars, modelId: 0, modelName: '' } })
-            setModelActionsheet({ data: [], opened: false })
-        }
     }
 
     return (
@@ -133,34 +87,19 @@ const GuestForm = () => {
                         />
                     </FormControl>
                     <FormControl>
-                        <FormControl.Label htmlFor="color">Cor</FormControl.Label>
+                        <FormControl.Label htmlFor="sicap">Sicap</FormControl.Label>
                         <Input
                             h={responsiveHeight(8)}
                             size={'lg'}
                             rounded={12}
-                            defaultValue={dataForm.cars.colorName}
-                            id="color"
-                            onChangeText={(text) => filterColors(text)}
+                            defaultValue={dataForm.sicap}
+                            id="sicap"
+                            onChangeText={(text) => setDataForm({ ...dataForm, sicap: text })}
                             autoCapitalize="none"
-                            placeholder="Digite o cor"
+                            maxLength={15}
+                            placeholder="Digite o sicap"
                         />
                     </FormControl>
-                    <ActionSheetComponent data={colorActionsheet.data as any} opened={colorActionsheet.opened} selectFunction={selectColor} />
-                    <FormControl>
-                        <FormControl.Label htmlFor="model">Modelo</FormControl.Label>
-                        <Input
-                            h={responsiveHeight(8)}
-                            size={'lg'}
-                            rounded={12}
-                            defaultValue={dataForm.cars.modelName}
-                            id="model"
-                            onChangeText={(text) => filterModels(text)}
-                            autoCapitalize="none"
-                            placeholder="Digite o modelo"
-
-                        />
-                    </FormControl>
-                    <ActionSheetComponent data={modelActionsheet.data as any} opened={modelActionsheet.opened} selectFunction={selectModels} />
                     <HStack justifyContent={'space-between'} paddingY={5}>
                         <Button
                             rounded={12}
