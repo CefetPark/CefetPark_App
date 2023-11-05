@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { observer } from 'mobx-react-lite';
 import { Modal, Text } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 const QrCodeHandle = ({ opened, setOpened }: { opened: boolean, setOpened: Function }) => {
@@ -62,4 +62,4 @@ const QrCodeHandle = ({ opened, setOpened }: { opened: boolean, setOpened: Funct
   );
 };
 
-export default observer(QrCodeHandle);
+export default memo(observer(QrCodeHandle));

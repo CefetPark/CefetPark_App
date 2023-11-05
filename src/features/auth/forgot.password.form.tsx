@@ -1,5 +1,7 @@
-import { Button, FormControl, Input, Text, VStack } from 'native-base';
+import GradientBtn from '@features/ui/gradient-btn';
+import { Button, FormControl, Input, Spinner, Text, VStack, View } from 'native-base';
 import React, { useState } from 'react';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 interface ForgotFormData {
   cpf: string;
@@ -13,10 +15,10 @@ export const ForgotPasswordForm = () => {
   };
 
   return (
-    <VStack space={4} w={'100%'}>
+    <VStack space={2} w={'100%'}>
       <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
       <Input
-        h={'22%'}
+        h={responsiveHeight(8)}
         w={'100%'}
         size={'lg'}
         onChangeText={(text) => setDataForm({ cpf: text })}
@@ -26,16 +28,19 @@ export const ForgotPasswordForm = () => {
         autoCorrect={false}
         placeholder="Digite o seu cpf"
       />
-      <Button
-        rounded={12}
-        h={'22%'}
-        onPress={() => handleSubmit()}
-        variant={'solid'}
-        backgroundColor={'primary'}
-        _text={{ color: 'secondary', fontSize: 'md' }}
-      >
-        Enviar
-      </Button>
+      <View mt={'5%'}>
+        <GradientBtn
+          callback={handleSubmit}
+          height={responsiveHeight(7)}
+          radius={12}
+          color='secondary'
+          fontSize='md'
+          component={<Spinner size="sm" color="secondary" />}
+          text={'Enviar'}
+          fColor='#002c58'
+          sColor='#004d99'
+        />
+      </View>
     </VStack >
   );
 };

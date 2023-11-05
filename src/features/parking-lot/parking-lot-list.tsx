@@ -17,7 +17,7 @@ import {
   View,
   VStack,
 } from 'native-base';
-import React from 'react';
+import React, { memo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ParkingLotModel } from './parking-lot.model';
@@ -134,4 +134,4 @@ const ParkingList = () => {
   );
 };
 
-export default observer(ParkingList);
+export default memo(observer(ParkingList));
