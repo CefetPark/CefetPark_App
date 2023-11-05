@@ -14,11 +14,10 @@ export class GuestService {
         const data = {
             nome: dataForm.name,
             cpf: dataForm.cpf,
+            sicap: dataForm.sicap,
             carros: [
                 {
                     placa: dataForm.cars.plate,
-                    cor_Id: dataForm.cars.colorId,
-                    modelo_Id: dataForm.cars.modelId
                 }
             ]
         }

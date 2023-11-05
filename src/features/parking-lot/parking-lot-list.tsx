@@ -46,8 +46,8 @@ const ParkingList = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View flex={1}>
-        <StatusBar barStyle={'light-content'} backgroundColor={"#001d3a"} />
-        <LinearGradient colors={['#001d3a', '#004a94']} style={{ height: '35%', borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }}>
+        <StatusBar barStyle={'light-content'} backgroundColor={"#004a94"} />
+        <LinearGradient colors={['#001d3a', '#004a94']} start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} style={{ height: '35%', borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }}>
           <VStack flex={1} paddingY={'2%'} alignSelf={'center'} justifyContent={'space-around'} alignItems={'center'} w={'100%'} paddingX={5}>
             <VStack w={'100%'}>
               <Text fontFamily={'body'} fontWeight="600" fontSize={responsiveFontSize(4)} color={'white'}>Olá,</Text>
