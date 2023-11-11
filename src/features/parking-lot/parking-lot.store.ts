@@ -70,8 +70,15 @@ class ParkingLotStore {
     })
   }
 
+  @action resetUnformatedData() {
+    runInAction(() => {
+      this.unformatedData = { type: 'default', data: null }
+    })
+  }
+
   @action setFormatedData(data: EntryRegister) {
     runInAction(() => {
+      this.resetUnformatedData()
       this.formatedData = data
     })
   }
