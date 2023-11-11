@@ -10,27 +10,25 @@ import React, { useEffect } from 'react';
 export const HandleDataModal = observer(() => {
   const { parkingLotStore } = useStore();
   const { type, data } = parkingLotStore.unformatedData
+  const { getFormattedDate } = useDate()
 
-  const handleSubmit = (data: any) => {
-    const { getFormattedDate } = useDate()
-    const newDataForm: EntryRegister = { carId: 0, date: getFormattedDate(), parkingLotId: 0, userId: 0, driverName: '', plate: "" };
+  const handleSubmit = (formData: any) => {
+    const newDataForm: EntryRegister = { carId: 0, date: getFormattedDate(), parkingLotId: parkingLotStore.currentParkingLot.id, userId: 0, driverName: '', plate: "" };
 
     if (type === 'car') {
+      newDataForm.carId = formData.id;
+      newDataForm.plate = formData.plate;
+    } else {
       newDataForm.carId = data.id;
       newDataForm.plate = data.plate;
-    } else {
-      const source = data.cars || data;
-      newDataForm.carId = source[0]?.id || data.id;
-      newDataForm.plate = source[0]?.plate || data.plate;
     }
 
     if (type === 'user') {
+      newDataForm.userId = formData.id;
+      newDataForm.driverName = formData.name;
+    } else {
       newDataForm.userId = data.id;
       newDataForm.driverName = data.name;
-    } else {
-      const source = data.users || data;
-      newDataForm.userId = source[0]?.id || data.id;
-      newDataForm.driverName = source[0]?.name || data.name;
     }
 
     parkingLotStore.setFormatedData(newDataForm)
