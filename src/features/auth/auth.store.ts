@@ -13,22 +13,19 @@ class AuthStore {
   @observable user: UserModel | null = null;
   @observable tempToken: string = '';
   @observable isAutenticated: boolean = false;
-  @observable isBiometricSupported: boolean | null = null;
-  @observable keepLoggedIn: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
 
     runInAction(async () => {
-      this.keepLoggedIn = Boolean(await this.getAsyncStorage('keepLoggedIn'))
-      const user = await authStore.getAsyncStorage('user')
-      const token = await authStore.getAsyncStorage('token')
-      user && token && authStore.setUserAndToken(JSON.parse(user), token.substring(1, token.length - 1))
-    })
+      const user = await this.getAsyncStorage('user');
+      const token = await this.getAsyncStorage('token');
+      user && token && this.setUserAndToken(JSON.parse(user), token);
+    });
   }
 
   @action getToken() {
-    return this.authToken
+    return this.authToken;
   }
 
   @action async login(loginFormData: LoginFormData) {
@@ -36,84 +33,64 @@ class AuthStore {
     if (req.data) {
       runInAction(async () => {
         this.user = req.data.user;
-        console.log(req.data.user.trocarSenha)
-        if (!req.data.user.trocarSenha) {
+        this.setAsyncStorage('user', JSON.stringify(this.user));
+        if (req.data.user.changePassword) {
           this.tempToken = req.data.token;
-        }
-        else {
+        } else {
+          this.setAsyncStorage('token', req.data.token);
+          console.log(req.data.token);
           this.authToken = req.data.token;
         }
-
-
-        if (this.keepLoggedIn) {
-          await this.setAsyncStorage('user', JSON.stringify(this.user))
-          await this.setAsyncStorage('token', JSON.stringify(this.authToken))
-        }
-      })
+      });
     }
-    return req
+    return req;
   }
 
   @action logout() {
-    AsyncStorage.clear()
+    AsyncStorage.clear();
+    runInAction(() => {
+      this.authToken = '';
+      this.tempToken = '';
+      this.user = null;
+    });
+  }
+
+  @action setAsyncStorage(key: string, value: string) {
     runInAction(async () => {
-      this.authToken = ''
-      this.user = null
+      await AsyncStorage.setItem(base64.encode(key), base64.encode(value));
     })
   }
 
-  @action setBiometricSupport(result: boolean) {
-    runInAction(() => {
-      this.isBiometricSupported = result
-    })
-  }
-
-  @action setIsAutenticated(result: boolean) {
-    runInAction(() => {
-      this.isBiometricSupported = result
-    })
-  }
-
-  @action changeKeepLoggedInState() {
-    this.setAsyncStorage('keepLoggedIn', String(!this.keepLoggedIn))
-    runInAction(() => {
-      this.keepLoggedIn = !this.keepLoggedIn
-    })
-  }
-
-  @action async setAsyncStorage(key: string, value: string) {
-    await AsyncStorage.setItem(base64.encode(key), base64.encode(value))
-    return true
-  }
 
   @action async getAsyncStorage(key: string) {
-    const data = await AsyncStorage.getItem(base64.encode(key))
-    return data ? base64.decode(data) : null
+    const data = await AsyncStorage.getItem(base64.encode(key));
+    return data ? base64.decode(data) : null;
   }
 
   @action setUserAndToken(user: UserModel, token: string) {
     runInAction(() => {
-      this.user = user
-      this.authToken = token
-    })
+      this.user = user;
+      this.authToken = token;
+    });
   }
 
   @action async resetPassword(data: ChangePasswordFormData): Promise<boolean> {
-    const res = await this.authService.resetPassword(data, this.tempToken)
+    const res = await this.authService.resetPassword(data, this.tempToken);
     if (res.error) {
-      return false
+      return false;
     } else {
+      await this.setAsyncStorage('token', this.tempToken);
       runInAction(() => {
-        this.authToken = this.tempToken
-      })
-      return true
+        this.authToken = this.tempToken;
+        this.tempToken = '';
+      });
+      return true;
     }
   }
 
   @action async forgotPassword(cpf: string): Promise<void> {
-    await this.authService.forgotPassword(cpf)
+    await this.authService.forgotPassword(cpf);
   }
-
 }
 
 export const authStore = new AuthStore();

@@ -1,4 +1,4 @@
-import { ColorModeOptions, useToast as useNativeBaseToast } from 'native-base';
+import { useToast as useNativeBaseToast } from 'native-base';
 
 export interface toastProps {
     description: string,

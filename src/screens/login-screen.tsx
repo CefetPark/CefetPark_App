@@ -17,21 +17,11 @@ const Login = () => {
   const [tooltipState, setTooltipState] = useState<boolean>(false)
 
   useEffect(() => {
-    (async () => {
-      if (!(await authStore.getAsyncStorage('isBiometricSupported'))) {
-        const compatible = await LocalAuthentication.hasHardwareAsync();
-        await authStore.setAsyncStorage('isBiometricSupported', String(compatible)).then(() => {
-          authStore.setBiometricSupport(compatible)
-        })
-      }
-    })()
-  }, [])
-
-  useEffect(() => {
     if (tooltipState) {
       setTimeout(() => { setTooltipState(false) }, 2000)
     }
   }, [tooltipState])
+
   useEffect(() => {
     if (authStore.tempToken) {
       navigation.navigate('ChangePassword' as never)
