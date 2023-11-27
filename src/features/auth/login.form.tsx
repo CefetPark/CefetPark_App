@@ -43,7 +43,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <VStack space={2} h={'100%'} w={'100%'}>
+    <VStack space={4} h={'100%'} w={'100%'}>
       <FormControl.Label htmlFor="cpf">CPF</FormControl.Label>
       <Input
         h={responsiveHeight(8)}
@@ -77,10 +77,6 @@ export const LoginForm = () => {
         autoCapitalize="none"
         placeholder="Digite sua senha"
       />
-      <HStack alignItems="center" space={3}>
-        <Switch defaultIsChecked={authStore.keepLoggedIn} onValueChange={() => { authStore.changeKeepLoggedInState() }} size="sm" />
-        <Text>Mantenha-me logado</Text>
-      </HStack>
 
       <View mt={'5%'}>
         <GradientBtn

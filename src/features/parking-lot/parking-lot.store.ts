@@ -1,5 +1,6 @@
 import { authStore } from '@features/auth/auth.store';
 import { action, makeAutoObservable, observable, reaction, runInAction } from 'mobx';
+import { useToast as useNativeBaseToast } from 'native-base';
 
 import { ParkingLotModel } from './parking-lot.model';
 import { ParkingLotService } from './parking-lot.service';
@@ -21,6 +22,9 @@ class ParkingLotStore {
         if (authStore.authToken != '') {
           const parkingLots = await this.parkingLotService.getParkingLots()
           runInAction(() => {
+            if (parkingLots.error?.errorMessage) {
+              authStore.logout()
+            }
             this.parkingLots = parkingLots.data
           })
         }

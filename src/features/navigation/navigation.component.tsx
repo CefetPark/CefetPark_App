@@ -41,7 +41,7 @@ const AuthNavigator = observer(() => {
 
   return (
     <Stack.Navigator>
-      {authStore.authToken != '' ? (
+      {authStore.authToken ? (
         <>
           <Stack.Screen name="Root" component={BottomNavigator} options={{ headerShown: false }} />
         </>
