@@ -13,4 +13,18 @@ export class AuthService {
   }> {
     return await this.httpService.post<AuthModel>('/login', undefined, { ...data }, AuthModel,);
   }
+
+  async resetPassword(data: { password: string, confirmPassword: string }, token: string): Promise<{
+    error: { statusError: number; errorMessage: string } | null;
+    data: any;
+  }> {
+    return await this.httpService.post<AuthModel>('/redefinir-minha-senha', token, { novaSenha: data.password, confirmarNovaSenha: data.confirmPassword });
+  }
+
+  async forgotPassword(cpf: string): Promise<{
+    error: { statusError: number; errorMessage: string } | null;
+    data: any;
+  }> {
+    return await this.httpService.post<AuthModel>('/esqueci-minha-senha', undefined, { cpf });
+  }
 }
