@@ -51,6 +51,7 @@ export class Service {
 
       return response
     } catch (error) {
+      console.log(error)
       return {
         error: { statusError: -1, errorMessage: 'Erro ao tentar obter dados' },
         data: null,

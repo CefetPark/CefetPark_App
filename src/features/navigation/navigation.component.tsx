@@ -12,6 +12,7 @@ import ParkingManage from '@screens/parking-manage-screen';
 import RemoveScreen from '@screens/parking-removal-screen';
 import Profile from '@screens/profile-screen';
 import QrCodeScreen from '@screens/qr-code-screen';
+import ChangePassword from '@screens/reset-password-screen';
 import { HomeStackParamList, LoginTypes, RootStackParamList, StackParamList } from '@types';
 import { observer } from 'mobx-react-lite';
 import { useTheme } from 'native-base';
@@ -55,6 +56,11 @@ const AuthNavigator = observer(() => {
             name="ForgotPassword"
             component={ForgotPassword}
             options={{ headerTransparent: true, headerTitle: '' }}
+          />
+          <Stack.Screen
+            name="ChangePassword"
+            component={ChangePassword}
+            options={{ headerTransparent: true, headerTitle: '', headerBackVisible: true, headerBackTitle: 'voltar' }}
           />
         </>
       )}

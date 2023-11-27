@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { LoginForm, LoginFormData } from '../features/auth/login.form';
+import { LoginForm } from '../features/auth/login.form';
 
 const Login = () => {
   const { authStore } = useStore()
@@ -32,6 +32,11 @@ const Login = () => {
       setTimeout(() => { setTooltipState(false) }, 2000)
     }
   }, [tooltipState])
+  useEffect(() => {
+    if (authStore.tempToken) {
+      navigation.navigate('ChangePassword' as never)
+    }
+  }, [authStore.tempToken])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

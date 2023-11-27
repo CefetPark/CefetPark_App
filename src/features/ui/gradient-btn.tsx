@@ -15,6 +15,7 @@ type GradientBtnProps = {
     component?: any
     callback?: Function
     iconComponent?: any
+    disabled?: boolean
 }
 
 const GradientBtn = (props: GradientBtnProps) => {
@@ -25,6 +26,7 @@ const GradientBtn = (props: GradientBtnProps) => {
             rounded={props.radius}
             overflow={'hidden'}
             w={'100%'}
+            disabled={props.disabled || false}
         >
             <LinearGradient
                 style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}

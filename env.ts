@@ -1,5 +1,5 @@
 function getApiUrl() {
-  return 'http://18.222.105.195:8080/'
+  return 'https://18.208.188.33:5001/'
 }
 
 export const Env = {
