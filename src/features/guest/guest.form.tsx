@@ -1,17 +1,13 @@
 import useToast from '@base/src/helpers/use-toast';
 import useStore from '@features/app/use-store';
-import { Colors } from '@features/colors/colors.model';
-import { Models } from '@features/models/models.model';
-import ActionSheetComponent from '@features/ui/actionSheet';
 import GradientBtn from '@features/ui/gradient-btn';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { Button, FormControl, HStack, Input, KeyboardAvoidingView, Spinner, VStack, View } from 'native-base';
+import { Button, FormControl, HStack, Input, KeyboardAvoidingView, Spinner, View, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Keyboard } from 'react-native';
 import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type DataForm = {
     name: string

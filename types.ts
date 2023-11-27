@@ -9,6 +9,7 @@ export type StackParamList = {
   Root: RootStackParamList | undefined;
   Login: undefined;
   ForgotPassword: undefined;
+  ChangePassword: undefined;
 };
 
 export type HomeStackParamList = {

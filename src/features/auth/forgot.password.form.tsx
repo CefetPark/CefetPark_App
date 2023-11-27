@@ -1,4 +1,7 @@
+import useToast from '@base/src/helpers/use-toast';
+import useStore from '@features/app/use-store';
 import GradientBtn from '@features/ui/gradient-btn';
+import { useNavigation } from '@react-navigation/native';
 import { Button, FormControl, Input, Spinner, Text, VStack, View } from 'native-base';
 import React, { useState } from 'react';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
@@ -9,9 +12,14 @@ interface ForgotFormData {
 
 export const ForgotPasswordForm = () => {
   const [dataForm, setDataForm] = useState<ForgotFormData>({ cpf: '' });
+  const { authStore } = useStore()
+  const toast = useToast()
+  const navigation = useNavigation()
 
   const handleSubmit = () => {
-    console.log(dataForm);
+    authStore.forgotPassword(dataForm.cpf)
+    toast({ bgColor: 'success', description: 'Se houver um e-mail vinculado a esse cpf, uma nova senha será enviada para o seu e-mail.', placement: 'top', variant: 'subtle' })
+    navigation.goBack()
   };
 
   return (
@@ -25,6 +33,7 @@ export const ForgotPasswordForm = () => {
         maxLength={11}
         rounded={12}
         id="cpf"
+        inputMode='numeric'
         autoCorrect={false}
         placeholder="Digite o seu cpf"
       />

@@ -12,6 +12,7 @@ export class UserModel {
   secondaryEmail = '';
   department = '';
   userType = '';
+  trocarSenha = '';
   cars: CarsModel[] = [];
 }
 export class AuthModel {
@@ -52,5 +53,6 @@ createModelSchema(UserModel, {
   secondaryEmail: alias('emailSecundario', primitive()),
   department: alias('departamento', primitive()),
   userType: alias('tipoUsuario', primitive()),
+  changePassword: alias('trocarSenha', primitive()),
   cars: alias('carros', list(object(CarsModel)))
 });

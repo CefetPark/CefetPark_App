@@ -1,11 +1,10 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import useStore from '@features/app/use-store';
-import { Button, FormControl, HStack, Icon, Input, Spinner, Switch, Text, useTheme, useToast, View, VStack } from 'native-base';
-import React, { useState } from 'react';
-import { MaterialIcons } from "@expo/vector-icons";
-import { Pressable, Keyboard } from 'react-native';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
-import { LinearGradient } from 'expo-linear-gradient';
 import GradientBtn from '@features/ui/gradient-btn';
+import { FormControl, HStack, Icon, Input, Spinner, Switch, Text, useToast, View, VStack } from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Keyboard, Pressable } from 'react-native';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 export interface LoginFormData {
   login: string;
