@@ -38,7 +38,6 @@ class AuthStore {
           this.tempToken = req.data.token;
         } else {
           this.setAsyncStorage('token', req.data.token);
-          console.log(req.data.token);
           this.authToken = req.data.token;
         }
       });
@@ -47,7 +46,8 @@ class AuthStore {
   }
 
   @action logout() {
-    AsyncStorage.clear();
+    try { AsyncStorage.clear(); }
+    catch (error) { }
     runInAction(() => {
       this.authToken = '';
       this.tempToken = '';

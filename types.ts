@@ -32,4 +32,5 @@ export type RootStackParamList = {
 export enum LoginTypes {
   Security = 'Segurança',
   Driver = 'Condutor',
+  Guest = 'Convidado'
 }

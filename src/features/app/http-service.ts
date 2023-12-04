@@ -92,12 +92,12 @@ export class Service {
   async get<T>(url: string,
     authToken?: string,
     modelSchema?: ClazzOrModelSchema<T>,
+    params?: any
   ) {
     try {
       const urlFormated = url ? `${this.baseUrl}${url}` : this.baseUrl
-
-      const headers: AxiosRequestConfig = authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}
-      const response: AxiosResponse = await this.axios.get(urlFormated, headers);
+      const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {}
+      const response: AxiosResponse = await this.axios.get(urlFormated, { headers, params });
       if (modelSchema) this.data = deserialize<T>(modelSchema, response.data.data);
       else this.data = response.data;
 
@@ -122,8 +122,9 @@ export class Service {
   getList<T>(url: string,
     authToken?: string,
     modelSchema?: ClazzOrModelSchema<T>,
+    params?: any
   ) {
     const schema = modelSchema as any
-    return this.get<T[]>(url, authToken, schema ? schema : undefined,)
+    return this.get<T[]>(url, authToken, schema ? schema : undefined, params)
   }
 }
