@@ -2,7 +2,7 @@ import useStore from '@features/app/use-store';
 import { Chart } from '@features/parking-lot/parking-lot-chart';
 import GradientBtn from '@features/ui/gradient-btn';
 import Maps from '@features/ui/maps';
-import { Avatar, Center, HStack, ScrollView, Skeleton, Text, View, VStack } from 'native-base';
+import { Avatar, Center, HStack, ScrollView, Skeleton, Spinner, Text, View, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Linking } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -127,7 +127,11 @@ export const ParkingDetails = () => {
                 <Text color={'success'} fontWeight={'bold'} fontSize={responsiveFontSize(3)}>{parkingLotStore.currentParkingLot.freeSpots}</Text>
               </HStack>
               <View>
-                <Chart />
+                {
+                  parkingLotStore.graphData.data.length > 0
+                    ? <Chart />
+                    : <View marginTop={5}><Spinner size={50} /></View>
+                }
               </View>
             </VStack>
           </VStack>

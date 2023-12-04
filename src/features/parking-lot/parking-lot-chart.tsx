@@ -1,13 +1,15 @@
-import { Text, useTheme, View } from 'native-base';
-import React from 'react';
+import useStore from '@features/app/use-store';
+import { useTheme } from 'native-base';
+import React, { memo } from 'react';
 import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
-export const Chart = () => {
+export const Chart = memo(() => {
   const { colors } = useTheme()
-  const data = [5, 13, 20, 25, 40, 25, 20, 5];
-  const hours = ['07H', '09H', '11H', '13H', '15H', '17H', '19H', '21H'];
+  const { parkingLotStore } = useStore()
+  const data = parkingLotStore.graphData.data
+  const hours = parkingLotStore.graphData.hours
 
   const chartConfig = {
     backgroundGradientFrom: "#FFF",
@@ -30,6 +32,7 @@ export const Chart = () => {
       width={responsiveWidth(95)}
       height={Dimensions.get('window').width < 400 ? responsiveHeight(29) : responsiveHeight(25)}
       formatYLabel={(el) => `${parseInt(el)}%`}
+      formatXLabel={(el) => `${el}H`}
       withVerticalLines={false}
       verticalLabelRotation={0}
       chartConfig={chartConfig}
@@ -47,5 +50,5 @@ export const Chart = () => {
       }}
       bezier
     />
-  );
-};
+  )
+})
