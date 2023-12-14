@@ -51,7 +51,6 @@ class ParkingLotStore {
     runInAction(async () => {
       if (parkingLot) this.currentParkingLot = parkingLot
       if (authStore.user?.userType == LoginTypes.Driver) {
-        console.log('entrei')
         const req = await this.graphService.getGraph(parkingLotId)
         req.data ? this.graphData = { ...req.data } : this.graphData = { data: [0, 0, 0, 0, 0, 0, 0, 0], hours: ['07H', '09H', '11H', '13H', '15H', '17H', '19H', '21H'] }
       }
