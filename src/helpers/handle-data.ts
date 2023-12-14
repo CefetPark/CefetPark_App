@@ -34,11 +34,11 @@ const useHandleData = () => {
             parkingLotStore.setUnformatedData(data, 'car')
         } else {
             const newDate: EntryRegister = {
-                carId: data.id,
+                carId: data.users ? data.id : data.cars[0].id,
                 date: new Date(),
-                driverName: data.users[0].name,
-                plate: data.plate,
-                userId: data.users[0].id,
+                driverName: data.users ? data.users[0].name : data.name,
+                plate: data.users ? data.plate : data.cars[0].plate,
+                userId: data.users ? data?.users[0].id : data.id,
                 parkingLotId: parkingLotStore.currentParkingLot.id
             }
             parkingLotStore.setFormatedData(newDate)
